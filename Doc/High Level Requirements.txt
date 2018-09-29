@@ -1,0 +1,11 @@
+High Level Requirements describes following:
+ 
+	1. An admin can add other user
+	2. An admin can manage Product
+	3. During product management admin can attach barcode from the product
+	4. Any user can manage sell
+	5. Sell can be done by filtering product or scanning barcode
+	6. During a sell customer information will be provided through sell UI
+	7. A invoice will generate after successful sell
+	8. Admin can see stock report and profit report
+	9. Payment gateway like bKash/DBBL mobile banking

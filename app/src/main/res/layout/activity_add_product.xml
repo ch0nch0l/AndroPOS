@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".layout.AddProductActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/txtProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Product Name"/>
+
+        <Spinner
+            android:id="@+id/categorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+        <EditText
+            android:id="@+id/txtProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Product Price"/>
+
+        <EditText
+            android:id="@+id/txtProductQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Product Quantity"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <CheckBox
+                android:id="@+id/chkScanBarcode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Is barcode available?"/>
+
+            <Button
+                android:id="@+id/btnScanBarCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@color/colorFade"
+                android:textColorHint="#fff"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="bottom"
+                android:textColor="#fff"
+                android:paddingTop="6dp"
+                android:enabled="false"
+                android:text="Scan Bar Code"/>
+
+        </LinearLayout>
+
+
+        
+        <Button
+            android:id="@+id/btnAddProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#fff"
+            android:background="@color/colorPrimaryDark"
+            android:text="ADD"/>
+
+        <ImageView
+            android:id="@+id/imgProductBarCode"
+            android:layout_width="160sp"
+            android:layout_height="160sp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,51 @@
+ClientInfo
+	-client_id
+	-client_name
+	-database_name
+	-password
+	-email
+	-is_active
+Category
+	-cat_id
+	-name
+	-is_active
+Sub-Category
+	-subcat_id
+	-cat_id
+	-name
+	-is_active
+Customer
+	-customer_id
+	-name
+	-phone
+	-address
+Product
+	-product_id
+	-name
+	-description
+	-image
+	-code
+	-subcat_id
+	-price
+	-is_active
+Quotation
+	-quotation_id
+	-customer_id
+	-date
+QuotationList
+	-quotation_id
+	-product_id
+	-quantity
+	-total_price
+Stock
+	-stock_id
+	-product_id
+	-quantity
+Sale
+	-sale_id
+	-quotation_id
+User
+	-user_id
+	-user_name
+	-password
+	-is_active

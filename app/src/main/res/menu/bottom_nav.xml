@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_home"
+        android:title="@string/home"
+        android:icon="@mipmap/ic_home" />
+    <item android:id="@+id/action_product"
+        android:title="@string/product"
+        android:icon="@mipmap/ic_product" />
+    <item android:id="@+id/action_sell"
+        android:title="@string/sale"
+        android:icon="@mipmap/ic_sell" />
+    <item android:id="@+id/action_user"
+        android:title="@string/user"
+        android:icon="@mipmap/ic_user" />
+    <item android:id="@+id/action_report"
+        android:title="@string/report"
+        android:icon="@mipmap/ic_report" />
+</menu>

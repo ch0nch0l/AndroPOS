@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Andro POS</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Bottom Nav-->
+    <string name="home">HOME</string>
+    <string name="product">PRODUCT</string>
+    <string name="sale">SALE</string>
+    <string name="user">USER</string>
+    <string name="report">REPORT</string>
+
+    <!--Nav-->
+    <string name="username">USERNAME</string>
+
+    <!--Product-->
+    <string name="category">CATEGORY</string>
+    <string name="category_add">ADD CATEGORY</string>
+    <string name="product_add">ADD PRODUCT</string>
+    <string name="stock">STOCK</string>
+    <string name="delete">DELETE</string>
+
+    <!--Sale-->
+    <string name="sale_add">ADD SALE</string>
+    <string name="sale_record">SALE RECORD</string>
+
+
+    <!--Category-->
+    <string-array name="category">
+        <item>--Select Category--</item>
+        <item>Mobile</item>
+        <item>Accessories</item>
+    </string-array>
+    <string name="title_activity_add_category">AddCategoryActivity</string>
+
+
+</resources>
