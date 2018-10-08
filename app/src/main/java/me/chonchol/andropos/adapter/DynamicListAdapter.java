@@ -14,58 +14,66 @@ import java.util.List;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.interfaces.OnRecyclerViewItemClickListener;
 import me.chonchol.andropos.model.Category;
+import me.chonchol.andropos.model.Subcategory;
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CatItemViewHolder> {
+public class DynamicListAdapter extends RecyclerView.Adapter<DynamicListAdapter.ObjectItemViewHolder> {
 
     private Context context;
-    private List<Category> categories;
+    private List<Object> objects;
     private OnRecyclerViewItemClickListener itemClickListener;
 
-    public CategoryListAdapter(Context context, List<Category> categories, OnRecyclerViewItemClickListener itemClickListener) {
+    public DynamicListAdapter(Context context, List<Object> objects, OnRecyclerViewItemClickListener itemClickListener) {
         this.context = context;
-        this.categories = categories;
+        this.objects = objects;
         this.itemClickListener = itemClickListener;
     }
 
     @Override
-    public CatItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ObjectItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_list_item, parent, false);
-        return new CatItemViewHolder(view);
+        return new ObjectItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CatItemViewHolder holder, int position) {
-        holder.bind(categories.get(position), itemClickListener);
-        final Category category = categories.get(position);
-        holder.catName.setText(category.getCatName());
+    public void onBindViewHolder(ObjectItemViewHolder holder, int position) {
+        holder.bind(objects.get(position), itemClickListener);
+        final Object object = objects.get(position);
+
+        if (object instanceof Category){
+            Category category = (Category) object;
+            holder.catName.setText(category.getCatName());
+        } else if (object instanceof Subcategory){
+            Subcategory subcategory = (Subcategory) object;
+            holder.catName.setText(subcategory.getSubcatName());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return objects.size();
     }
 
     public void removeItem(int position) {
-        categories.remove(position);
+        objects.remove(position);
         // notify the item removed by position
         // to perform recycler view delete animations
         // NOTE: don't call notifyDataSetChanged()
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(Category item, int position) {
-        categories.add(position, item);
+    public void restoreItem(Object item, int position) {
+        objects.add(position, item);
         // notify item added by position
         notifyItemInserted(position);
     }
 
-    public class CatItemViewHolder extends RecyclerView.ViewHolder{
+    public class ObjectItemViewHolder extends RecyclerView.ViewHolder{
 
         public TextView catName;
         public ImageView thumbnail;
         public RelativeLayout viewForeground, viewBackground;
 
-        public CatItemViewHolder(View itemView) {
+        public ObjectItemViewHolder(View itemView) {
             super(itemView);
             catName = itemView.findViewById(R.id.txtCatName);
             thumbnail = itemView.findViewById(R.id.thumbnail);
@@ -73,11 +81,11 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             viewForeground = itemView.findViewById(R.id.view_foreground);
         }
 
-        public void bind(final Category category, final OnRecyclerViewItemClickListener itemClickListener) {
+        public void bind(final Object object, final OnRecyclerViewItemClickListener itemClickListener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClickListener.onObjectItemClick(category);
+                    itemClickListener.onObjectItemClick(object);
                 }
             });
         }

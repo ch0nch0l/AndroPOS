@@ -3,6 +3,7 @@ package me.chonchol.androposweb.controller;
 import me.chonchol.androposweb.entity.Subcategory;
 import me.chonchol.androposweb.repository.SubcategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,16 @@ public class SubcategoryController {
     @GetMapping("/subcategory")
     public List<Subcategory> index(){
         return subcategoryRepository.findAll();
+    }
+
+//    @GetMapping("subcategory/{cat_id}")
+//    public List<Subcategory> getSubCategoryByCatId(@PathVariable("cat_id") Integer id){
+//        return subcategoryRepository.findAll();
+//    }
+
+    @GetMapping("subcategory/cat/{cat_id}")
+    public List<Subcategory> getSubCategoryByCatId(@PathVariable("cat_id") Integer id){
+        return subcategoryRepository.getSubCategoryByCatId(id);
     }
 
     @GetMapping("/subcategory/{subcat_id}")

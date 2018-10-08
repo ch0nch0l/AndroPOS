@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.chonchol.andropos">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -36,10 +36,9 @@
         <activity android:name=".layout.UserListActivity" />
         <activity android:name=".layout.ProfileActivity" />
         <activity android:name=".layout.LoginActivity" />
-        <activity
-            android:name=".layout.CategoryActivity"
-            android:label="@string/title_activity_add_category"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".layout.CategoryListActivity" />
+        <activity android:name=".layout.AddCategoryActivity" />
+        <activity android:name=".layout.CategoryActivity"/>
     </application>
 
 </manifest>

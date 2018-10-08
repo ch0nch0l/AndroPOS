@@ -6,21 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".layout.AddCategoryActivity"
-    tools:showIn="@layout/activity_add_category">
+    tools:context=".layout.CategoryListActivity"
+    tools:showIn="@layout/activity_category_list">
 
-    <EditText
-        android:id="@+id/inputCatName"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/categoryListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Category Name"/>
+        android:layout_margin="8dp"
+        android:scrollbars="vertical">
 
-    <CheckBox
-        android:id="@+id/catIsActive"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:visibility="gone"
-        android:text="@string/is_active"/>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

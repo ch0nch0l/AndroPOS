@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import me.chonchol.andropos.R;
-import me.chonchol.andropos.layout.CategoryActivity;
+import me.chonchol.andropos.layout.CategoryListActivity;
 import me.chonchol.andropos.layout.AddProductActivity;
 import me.chonchol.andropos.layout.StockActivity;
 
@@ -127,7 +127,7 @@ public class ProductFragment extends Fragment {
         addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CategoryActivity.class);
+                Intent intent = new Intent(getContext(), CategoryListActivity.class);
                 startActivity(intent);
             }
         });

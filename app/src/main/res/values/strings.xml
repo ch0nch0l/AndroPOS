@@ -2,8 +2,6 @@
     <string name="app_name">Andro POS</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="action_settings">Settings</string>
 
     <!--Bottom Nav-->
@@ -18,7 +16,6 @@
 
     <!--Product-->
     <string name="category">CATEGORY</string>
-    <string name="category_add">ADD CATEGORY</string>
     <string name="product_add">ADD PRODUCT</string>
     <string name="stock">STOCK</string>
     <string name="delete">DELETE</string>
@@ -36,5 +33,8 @@
     </string-array>
     <string name="title_activity_add_category">AddCategoryActivity</string>
 
+    <!--GLOBAL-->
+    <string name="is_active">Is Active ?</string>
+    <string name="title_activity_category">CategoryActivity</string>
 
 </resources>

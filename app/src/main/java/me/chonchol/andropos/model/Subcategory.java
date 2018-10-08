@@ -1,28 +1,16 @@
-package me.chonchol.androposweb.entity;
+package me.chonchol.andropos.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.SerializedName;
 
-import javax.persistence.*;
-
-
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Entity
-@Table(name = "SUBCATEGORY")
 public class Subcategory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subcat_id")
     private Integer subcatId;
 
-    @Column(name = "cat_name")
     private String subcatName;
 
-    @Column(name = "is_active")
+    @SerializedName("active")
     private Boolean isActive;
 
-    @ManyToOne
-    @JoinColumn(name = "cat_id")
     private Category category;
 
     public Integer getSubcatId() {
@@ -53,7 +41,7 @@ public class Subcategory {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Integer catId) {
         this.category = category;
     }
 }
