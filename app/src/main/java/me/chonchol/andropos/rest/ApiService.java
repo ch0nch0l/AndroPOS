@@ -31,4 +31,7 @@ public interface ApiService {
     @GET("/subcategory/cat/{cat_id}")
     Call<List<Subcategory>> getSubcategoryListByCatId(@Path("cat_id") Integer id);
 
+    @POST("/subcategory")
+    Call<Subcategory> saveSubcategory(@Body Subcategory subcategory);
+
 }

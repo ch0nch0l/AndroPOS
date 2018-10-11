@@ -38,7 +38,11 @@
         <activity android:name=".layout.LoginActivity" />
         <activity android:name=".layout.CategoryListActivity" />
         <activity android:name=".layout.AddCategoryActivity" />
-        <activity android:name=".layout.CategoryActivity"/>
+        <activity android:name=".layout.CategoryActivity" />
+        <activity
+            android:name=".layout.AddSubcategoryActivity"
+            android:label="@string/title_activity_add_subcategory"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

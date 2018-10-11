@@ -2,7 +2,9 @@ package me.chonchol.andropos.enums;
 
 public enum RequestCode {
 
-    ADDCATEGORY(101);
+    ADDCATEGORY(101),
+    ADDSUBCATEGORY(201);
+
 
     private final int value;
 

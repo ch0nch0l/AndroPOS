@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.chonchol.andropos.R;
-import me.chonchol.andropos.adapter.CategoryListAdapter;
+import me.chonchol.andropos.adapter.DynamicListAdapter;
 import me.chonchol.andropos.enums.RequestCode;
 import me.chonchol.andropos.helper.RecyclerItemTouchHelper;
 import me.chonchol.andropos.interfaces.OnRecyclerViewItemClickListener;
@@ -34,8 +34,9 @@ import retrofit2.Response;
 public class CategoryListActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private RecyclerView recyclerView;
-    private List<Category> categories;
-    private CategoryListAdapter adapter;
+    private List<Category> categories = new ArrayList<Category>();
+    private List<Object> objects;
+    private DynamicListAdapter adapter;
     private CoordinatorLayout coordinatorLayout;
 
     @Override
@@ -58,15 +59,64 @@ public class CategoryListActivity extends AppCompatActivity implements RecyclerI
         initializeView();
     }
 
+    public void initializeView(){
+        recyclerView = findViewById(R.id.categoryListView);
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
+        objects = new ArrayList<>();
+
+        adapter = new DynamicListAdapter(getApplicationContext(), objects, new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onObjectItemClick(Object object) {
+                Category category = (Category) object;
+                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
+                intent.putExtra("CAT_NAME", category.getCatName());
+                intent.putExtra("CAT_ID", category.getCatId());
+                startActivity(intent);
+            }
+        });
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<List<Category>> getAllCategories = apiService.getAllCategories();
+
+        getAllCategories.enqueue(new Callback<List<Category>>() {
+
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+
+                for (Category category : response.body()) {
+                    objects.add(category);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof CategoryListAdapter.CatItemViewHolder) {
+        if (viewHolder instanceof DynamicListAdapter.ObjectItemViewHolder) {
             // get the removed item name to display it in snack bar
+            for(Object object: objects){
+                categories.add((Category) object);
+            }
             String name = categories.get(viewHolder.getAdapterPosition()).getCatName();
 
             // backup of removed item for undo purpose
-            final Category deletedItem = categories.get(viewHolder.getAdapterPosition());
+            final Object deletedItem = objects.get(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
 
             // remove the item from recycler view
@@ -86,53 +136,6 @@ public class CategoryListActivity extends AppCompatActivity implements RecyclerI
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
         }
-    }
-
-    public void initializeView(){
-        recyclerView = findViewById(R.id.categoryListView);
-        coordinatorLayout = findViewById(R.id.coordinatorLayout);
-        categories = new ArrayList<>();
-
-        adapter = new CategoryListAdapter(this, categories, new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onObjectItemClick(Object object) {
-                Category category = (Category) object;
-                Intent intent = new Intent(getApplicationContext(), CategoryActivity.class);
-                intent.putExtra("CAT_NAME", category.getCatName());
-                intent.putExtra("CAT_ID", category.getCatId());
-                startActivity(intent);
-            }
-        });
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(adapter);
-
-        ItemTouchHelper.SimpleCallback simpleCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
-        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<List<Category>> getAllCategories = apiService.getAllCategories();
-        getAllCategories.enqueue(new Callback<List<Category>>() {
-
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-
-                for (Category category : response.body()) {
-                    categories.add(category);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-
     }
 
     @Override

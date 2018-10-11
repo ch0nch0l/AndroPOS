@@ -41,7 +41,7 @@ public class Subcategory {
         return category;
     }
 
-    public void setCategory(Integer catId) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }

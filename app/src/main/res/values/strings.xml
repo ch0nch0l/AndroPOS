@@ -36,5 +36,7 @@
     <!--GLOBAL-->
     <string name="is_active">Is Active ?</string>
     <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_add_subcategory">AddSubcategoryActivity</string>
+    <string name="please_select">~Please Select~</string>
 
 </resources>

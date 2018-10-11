@@ -1,5 +1,6 @@
 package me.chonchol.andropos.layout;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.DynamicListAdapter;
+import me.chonchol.andropos.enums.RequestCode;
 import me.chonchol.andropos.helper.RecyclerItemTouchHelper;
 import me.chonchol.andropos.interfaces.OnRecyclerViewItemClickListener;
 import me.chonchol.andropos.model.Subcategory;
@@ -34,7 +36,7 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerItemT
 
     private TextView txtCatName;
     private RecyclerView subcatRecyclerView;
-    private List<Subcategory> subcategories;
+    private List<Subcategory> subcategories = new ArrayList<Subcategory>();
     private List<Object> objects;
     private DynamicListAdapter adapter;
     private CoordinatorLayout coordinatorLayout;
@@ -48,14 +50,17 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerItemT
 
         initializeView();
 
-        Toast.makeText(getApplicationContext(), (getIntent().getExtras().getString("CAT_ID")), Toast.LENGTH_LONG).show();
+        Intent i = getIntent();
+        String message = String.valueOf((i.getIntExtra("CAT_ID", 0)));
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), AddSubcategoryActivity.class);
+                intent.putExtra("CAT_ID", getIntent().getExtras().getInt("CAT_ID"));
+                startActivityForResult(intent, RequestCode.ADDSUBCATEGORY.getValue());
             }
         });
     }
@@ -65,10 +70,10 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerItemT
         txtCatName = findViewById(R.id.txtCatName);
         subcatRecyclerView = findViewById(R.id.subcategoryListView);
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
-
         txtCatName.setText(getIntent().getExtras().getString("CAT_NAME"));
 
         objects = new ArrayList<>();
+
         adapter = new DynamicListAdapter(getApplicationContext(), objects, new OnRecyclerViewItemClickListener() {
             @Override
             public void onObjectItemClick(Object object) {
@@ -133,6 +138,14 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerItemT
             });
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RequestCode.ADDCATEGORY.getValue()){
+            if (resultCode == RESULT_OK)
+                adapter.notifyDataSetChanged();
         }
     }
 }
