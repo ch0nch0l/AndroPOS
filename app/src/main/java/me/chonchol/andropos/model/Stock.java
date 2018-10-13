@@ -1,26 +1,11 @@
-package me.chonchol.androposweb.entity;
+package me.chonchol.andropos.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
-import java.util.Set;
-
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Entity
-@Table(name = "STOCK")
 public class Stock {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "stock_id")
     private Integer stockId;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "quantity")
     private Integer quantity;
 
     public Integer getStockId() {

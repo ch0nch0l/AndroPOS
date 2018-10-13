@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".layout.AddProductActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_add_product">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/txtProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="50"
+            android:hint="Enter Product Name"/>
+
+        <com.weiwangcn.betterspinner.library.BetterSpinner
+            android:id="@+id/dropdownCatList"
+            android:layout_width="match_parent"
+            android:hint="Select Category"
+            android:layout_height="wrap_content" />
+
+        <com.weiwangcn.betterspinner.library.BetterSpinner
+            android:id="@+id/dropdownSubcatList"
+            android:layout_width="match_parent"
+            android:hint="Select Subcategory"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="false"
+            android:enabled="false"/>
+
+        <EditText
+            android:id="@+id/txtProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Enter Product Price"/>
+
+        <EditText
+            android:id="@+id/txtProductQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Enter Product Quantity"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <CheckBox
+                android:id="@+id/chkScanBarcode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Is barcode available?"/>
+
+            <Button
+                android:id="@+id/btnScanBarCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@color/colorFade"
+                android:textColorHint="#fff"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="bottom"
+                android:textColor="#fff"
+                android:paddingTop="6dp"
+                android:enabled="false"
+                android:text="Scan Bar Code"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgProductBarCode"
+            android:layout_width="160sp"
+            android:layout_height="160sp"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+</LinearLayout>

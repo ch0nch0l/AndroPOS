@@ -1,39 +1,18 @@
-package me.chonchol.androposweb.entity;
+package me.chonchol.andropos.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.SerializedName;
 
-import javax.persistence.*;
-
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Entity
-@Table(name = "PRODUCT")
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
     private Integer productId;
-
-    @Column(name = "product_name")
     private String productName;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "image")
-    private String image;
-
-    @Column(name = "code")
+    private String Image;
     private String code;
-
-    @OneToOne
-    @JoinColumn(name = "subcat_id")
     private Subcategory subcategory;
-
-    @Column(name = "price")
     private Double price;
 
-    @Column(name = "is_active")
+    @SerializedName("active")
     private Boolean isActive;
 
     public Integer getProductId() {
@@ -61,11 +40,11 @@ public class Product {
     }
 
     public String getImage() {
-        return image;
+        return Image;
     }
 
     public void setImage(String image) {
-        this.image = image;
+        Image = image;
     }
 
     public String getCode() {
