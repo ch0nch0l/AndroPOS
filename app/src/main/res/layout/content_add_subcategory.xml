@@ -16,11 +16,6 @@
         android:layout_height="wrap_content"
         android:hint="Enter Subcategory Name"/>
 
-    <Spinner
-        android:id="@+id/dropdownCatList"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
-
     <CheckBox
         android:id="@+id/subcatIsActive"
         android:layout_width="match_parent"

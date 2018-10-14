@@ -14,14 +14,14 @@ import com.stepstone.stepper.VerificationError;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.StepperAdapter;
 
-public class AddCustomerActivity extends AppCompatActivity implements StepperLayout.StepperListener{
+public class SaleActivity extends AppCompatActivity implements StepperLayout.StepperListener{
 
     private StepperLayout stepperLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_customer);
+        setContentView(R.layout.activity_sale);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -34,8 +34,10 @@ public class AddCustomerActivity extends AppCompatActivity implements StepperLay
             }
         });
 
+        StepperAdapter adapter = new StepperAdapter(getSupportFragmentManager(), getApplicationContext());
+
         stepperLayout = findViewById(R.id.stepperLayout);
-        stepperLayout.setAdapter(new StepperAdapter(getSupportFragmentManager(), getApplicationContext()));
+        stepperLayout.setAdapter(adapter);
         stepperLayout.setListener(this);
 
     }

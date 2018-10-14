@@ -44,7 +44,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                 String catName = inputCatName.getText().toString();
 
                 if (catName.isEmpty()){
-                    Toasty.error(getApplicationContext(), "Category Name can't be empty!", Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(getApplicationContext(), "Category Name can't be empty!", Toast.LENGTH_SHORT, true).show();
                 } else {
 
                     category.setCatName(inputCatName.getText().toString());

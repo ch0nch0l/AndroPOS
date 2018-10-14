@@ -2,7 +2,6 @@ package me.chonchol.andropos.layout.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import me.chonchol.andropos.R;
-import me.chonchol.andropos.layout.AddCustomerActivity;
-import me.chonchol.andropos.layout.AddSaleActivity;
+import me.chonchol.andropos.layout.SaleActivity;
+import me.chonchol.andropos.layout.SaleRecordActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,7 +82,7 @@ public class SaleFragment extends Fragment {
         btnAddSale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddCustomerActivity.class);
+                Intent intent = new Intent(getContext(), SaleActivity.class);
                 startActivity(intent);
             }
         });
@@ -91,7 +90,7 @@ public class SaleFragment extends Fragment {
         btnSaleRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddSaleActivity.class);
+                Intent intent = new Intent(getContext(), SaleRecordActivity.class);
                 startActivity(intent);
             }
         });

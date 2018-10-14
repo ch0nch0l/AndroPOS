@@ -20,12 +20,12 @@ import me.chonchol.andropos.R;
  * Created by mehedi.chonchol on 14-Oct-18.
  */
 
-public class StepperCustomerFragment extends Fragment implements BlockingStep {
+public class SaleCustomerFragment extends Fragment implements BlockingStep {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.stepper_layout, container, false);
+        View view = inflater.inflate(R.layout.sale_customer_fragment, container, false);
         return view;
     }
 
@@ -45,6 +45,7 @@ public class StepperCustomerFragment extends Fragment implements BlockingStep {
     }
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
+
     }
     @Override
     public VerificationError verifyStep() {

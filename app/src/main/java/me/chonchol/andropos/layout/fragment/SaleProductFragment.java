@@ -1,5 +1,6 @@
 package me.chonchol.andropos.layout.fragment;
 
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -20,12 +21,14 @@ import me.chonchol.andropos.R;
  * Created by mehedi.chonchol on 14-Oct-18.
  */
 
-public class StepperProductFragment extends Fragment implements BlockingStep {
+public class SaleProductFragment extends Fragment implements BlockingStep {
+
+    ViewDataBinding dataBinding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.stepper_layout, container, false);
+        View view = inflater.inflate(R.layout.sale_product_fragment, container, false);
         return view;
     }
 
@@ -45,6 +48,7 @@ public class StepperProductFragment extends Fragment implements BlockingStep {
     }
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
+        callback.goToPrevStep();
     }
     @Override
     public VerificationError verifyStep() {

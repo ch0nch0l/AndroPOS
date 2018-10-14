@@ -51,8 +51,8 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerItemT
         initializeView();
 
         Intent i = getIntent();
-        String message = String.valueOf((i.getIntExtra("CAT_ID", 0)));
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+        //String message = String.valueOf((i.getIntExtra("CAT_ID", 0)));
+        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +77,7 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerItemT
         adapter = new DynamicListAdapter(getApplicationContext(), objects, new OnRecyclerViewItemClickListener() {
             @Override
             public void onObjectItemClick(Object object) {
-                Toast.makeText(getApplicationContext(), "Its Working", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Its Working", Toast.LENGTH_LONG).show();
             }
         });
 

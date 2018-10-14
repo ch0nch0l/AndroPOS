@@ -8,6 +8,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
+        //Data binding
+        classpath 'com.android.tools.build:gradle:2.1.2'
         
 
         // NOTE: Do not place your application dependencies here; they belong
