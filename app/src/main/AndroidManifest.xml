@@ -44,6 +44,10 @@
         <activity
             android:name=".layout.AddSubcategoryActivity"
             android:label="@string/title_activity_add_subcategory"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".layout.AddCustomerActivity"
+            android:label="@string/title_activity_add_customer"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -37,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.StockListAdapter;
 import me.chonchol.andropos.model.Stock;
@@ -339,7 +340,7 @@ public class StockActivity extends AppCompatActivity {
 
                 document.add(table);
 
-                Toast.makeText(getApplicationContext(), "Stock Report STOCK_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf generated at DOWNLOADS folder", Toast.LENGTH_LONG).show();
+                Toasty.success(getApplicationContext(), "Stock Report STOCK_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf generated at DOWNLOADS folder", Toast.LENGTH_SHORT, true).show();
             } catch (DocumentException de) {
                 Log.e("PDFCreator", "DocumentException:" + de);
             } catch (IOException e) {
@@ -422,63 +423,3 @@ public class StockActivity extends AppCompatActivity {
         }
     }
 }
-
-
-//    private void createPDF() throws IOException, DocumentException {
-//
-//        Document document = new Document();
-//
-//        path = Environment.getDataDirectory().getAbsolutePath() + "/AndroPOS/Reports";
-//        dir = new File(path);
-//
-//        if (!dir.exists()){
-//            dir.mkdirs();
-//        }
-//
-//        Date currentTime = Calendar.getInstance().getTime();
-//        DateFormat format = new SimpleDateFormat("MMddyyyy_HHmmss");
-//        String fileName = format.format(currentTime);
-//        file = new File(dir, "Stock_" + fileName + ".pdf");
-//
-//        FileOutputStream outputStream = new FileOutputStream(file);
-//        PdfWriter writer = PdfWriter.getInstance(document, outputStream);
-//
-//        document.open();
-//
-//        //Doc Settings
-//        document.setPageSize(PageSize.A4);
-//        document.addCreationDate();
-//        document.addAuthor("Andro POS");
-//        document.addCreator("http://chonchol.me");
-//
-//        //Fonts & other variables
-//        BaseColor color = new BaseColor(0, 153, 204, 255);
-//        float headingFontSize = 20.0f;
-//        float valueFontSize = 26.0f;
-//        BaseFont font = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
-//
-//        // LINE SEPARATOR
-//        LineSeparator lineSeparator = new LineSeparator();
-//        lineSeparator.setLineColor(new BaseColor(0, 0, 0, 68));
-//
-//        //Heading
-//        Font titleFont = new Font(font, 36.0f, Font.NORMAL, BaseColor.BLACK);
-//
-//        //Creating Chunk
-//        Chunk titleChunk = new Chunk("Stock Report", titleFont);
-//        //Paragraph
-//        Paragraph titleParagraph = new Paragraph(titleChunk);
-//        titleParagraph.setAlignment(Element.ALIGN_CENTER);
-//
-//        document.add(titleParagraph);
-//
-//        document.add(new Paragraph(""));
-//        document.add(new Chunk(lineSeparator));
-//        document.add(new Paragraph(""));
-//
-//        document.close();
-//
-//        Toast.makeText(getApplicationContext(), "Created... :)", Toast.LENGTH_SHORT).show();
-//    }
-
-

@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.enums.RequestCode;
 import me.chonchol.andropos.model.Category;
@@ -40,13 +41,19 @@ public class AddCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 category = new Category();
+                String catName = inputCatName.getText().toString();
 
-                category.setCatName(inputCatName.getText().toString());
-                category.setActive(chkIsCatActive.isChecked());
+                if (catName.isEmpty()){
+                    Toasty.error(getApplicationContext(), "Category Name can't be empty!", Toast.LENGTH_SHORT, true).show();
+                } else {
 
-                saveCategory(category);
-                setResult(RESULT_OK);
-                finish();
+                    category.setCatName(inputCatName.getText().toString());
+                    category.setActive(chkIsCatActive.isChecked());
+
+                    saveCategory(category);
+                    setResult(RESULT_OK);
+                    finish();
+                }
             }
         });
     }
@@ -62,13 +69,13 @@ public class AddCategoryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), response.body().toString(), Toast.LENGTH_LONG).show();
+                    Toasty.success(getApplicationContext(), "Category added successfully!", Toast.LENGTH_SHORT, true).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage().toString(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), "Category addition failed!!!", Toast.LENGTH_SHORT, true).show();
             }
         });
 

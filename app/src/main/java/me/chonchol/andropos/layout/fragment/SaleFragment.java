@@ -1,14 +1,19 @@
 package me.chonchol.andropos.layout.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.layout.AddCustomerActivity;
+import me.chonchol.andropos.layout.AddSaleActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +34,8 @@ public class SaleFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private ImageButton btnAddSale, btnSaleRecord;
 
     public SaleFragment() {
         // Required empty public constructor
@@ -64,8 +71,30 @@ public class SaleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sale, container, false);
+        View view = inflater.inflate(R.layout.fragment_sale, container, false);
+        initializeView(view);
+        return view;
+    }
+
+    private void initializeView(View view) {
+        btnAddSale = view.findViewById(R.id.btnAddSale);
+        btnSaleRecord = view.findViewById(R.id.btnSaleRecord);
+
+        btnAddSale.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddCustomerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnSaleRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddSaleActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

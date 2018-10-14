@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.DynamicListAdapter;
 import me.chonchol.andropos.enums.RequestCode;
@@ -100,7 +101,7 @@ public class CategoryListActivity extends AppCompatActivity implements RecyclerI
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), "No Category found!!!", Toast.LENGTH_SHORT, true).show();
             }
         });
 
@@ -124,7 +125,7 @@ public class CategoryListActivity extends AppCompatActivity implements RecyclerI
 
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, name + " removed from cart!", Snackbar.LENGTH_LONG);
+                    .make(coordinatorLayout, name + "Category deleted!", Snackbar.LENGTH_LONG);
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

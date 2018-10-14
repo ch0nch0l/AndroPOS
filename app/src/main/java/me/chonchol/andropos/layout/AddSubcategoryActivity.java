@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.model.Category;
 import me.chonchol.andropos.model.Subcategory;
@@ -51,11 +52,17 @@ public class AddSubcategoryActivity extends AppCompatActivity {
         btnAddSubcategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subcategory.setSubcatName(inputSabcatName.getText().toString());
-                subcategory.setActive(subcatIsActive.isChecked());
-                saveSubcategory(subcategory);
-                setResult(RESULT_OK);
-                finish();
+                String subcatName = inputSabcatName.getText().toString();
+                if (!subcatName.isEmpty()){
+                    subcategory.setSubcatName(subcatName);
+                    subcategory.setActive(subcatIsActive.isChecked());
+                    saveSubcategory(subcategory);
+                    setResult(RESULT_OK);
+                    finish();
+                } else {
+                    Toasty.warning(getApplicationContext(), "Subcategory Name can't be empty!", Toast.LENGTH_SHORT, true).show();
+                }
+
             }
         });
     }
@@ -79,8 +86,6 @@ public class AddSubcategoryActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void saveSubcategory(Subcategory subcategory) {
@@ -88,7 +93,7 @@ public class AddSubcategoryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Subcategory> call, Response<Subcategory> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), response.body().toString(), Toast.LENGTH_LONG).show();
+                    Toasty.success(getApplicationContext(), "Subcategory added successfully!", Toast.LENGTH_SHORT, true).show();
                 }
             }
 

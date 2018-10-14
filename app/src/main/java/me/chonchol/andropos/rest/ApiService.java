@@ -51,4 +51,6 @@ public interface ApiService {
 
     @POST("/stock")
     Call<Stock> saveStock(@Body Stock stock);
+
+
 }

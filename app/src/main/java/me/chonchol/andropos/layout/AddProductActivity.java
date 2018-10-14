@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.model.Category;
 import me.chonchol.andropos.model.Product;
@@ -66,6 +67,8 @@ public class AddProductActivity extends AppCompatActivity {
     private ArrayAdapter<String> catAdapter, subcatAdapter;
     private Product product;
     private String scannedCode = null;
+    private String prodName;
+    private Double prodPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,7 @@ public class AddProductActivity extends AppCompatActivity {
                 try {
                     //converting the data to json
                     JSONObject obj = new JSONObject(result.getContents());
-                    scannedCode = obj.getString("name")+obj.getString("address");
+                    scannedCode = obj.getString("name") + obj.getString("address");
 
                     Toast.makeText(this, obj.getString("name") + obj.getString("address"), Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
@@ -175,17 +178,24 @@ public class AddProductActivity extends AppCompatActivity {
         btnAddProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product.setProductName(productName.getText().toString());
-                product.setPrice(Double.valueOf(productPrice.getText().toString()));
-                product.setActive(true);
-                if (scannedCode != null){
-                    product.setCode(scannedCode);
+                prodName = productName.getText().toString();
+                prodPrice = Double.valueOf(productPrice.getText().toString());
+
+                if (prodName.isEmpty() || prodPrice == null){
+                    Toasty.warning(getApplicationContext(), "Field can't be empty!", Toast.LENGTH_LONG, true).show();
+
                 } else {
-                    product.setCode(productName.getText().toString()+ dropdownSubcatList.getText().toString());
+                    product.setProductName(prodName);
+                    product.setPrice(prodPrice);
+                    product.setActive(true);
+                    if (scannedCode != null) {
+                        product.setCode(scannedCode);
+                    } else {
+                        product.setCode(productName.getText().toString() + dropdownSubcatList.getText().toString());
+                    }
+
+                    saveProduct(product);
                 }
-
-                saveProduct(product);
-
 
 //                String text = productName.getText().toString()+ dropdownSubcatList.getText().toString(); // Whatever you need to encode in the QR code
 //                MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -203,25 +213,27 @@ public class AddProductActivity extends AppCompatActivity {
 
     private void saveProduct(Product product) {
         apiService = ApiClient.getClient().create(ApiService.class);
-        apiService.saveProduct(product).enqueue(new Callback<Product>(){
+        apiService.saveProduct(product).enqueue(new Callback<Product>() {
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
                 response.body();
                 Toast.makeText(getApplicationContext(), "Product added", Toast.LENGTH_LONG).show();
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Product product = response.body();
                     Stock stock = new Stock();
                     stock.setProduct(product);
                     stock.setQuantity(Integer.valueOf(productQuantity.getText().toString()));
 
                     saveStock(stock);
+                    Toasty.success(getApplicationContext(), "Product added successfully!", Toast.LENGTH_LONG, true).show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Product add failed", Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), "Product add failed!!!", Toast.LENGTH_LONG, true).show();
             }
         });
     }
@@ -231,7 +243,7 @@ public class AddProductActivity extends AppCompatActivity {
         apiService.saveStock(stock).enqueue(new Callback<Stock>() {
             @Override
             public void onResponse(Call<Stock> call, Response<Stock> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Stock added", Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -251,7 +263,7 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Subcategory>> call, Response<List<Subcategory>> response) {
                 subcatNameList.clear();
-                for (Subcategory subcategory: response.body()){
+                for (Subcategory subcategory : response.body()) {
                     subcatNameList.add(subcategory.getSubcatName());
                     subcategoryList.add(subcategory);
                 }
