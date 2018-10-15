@@ -2,7 +2,9 @@ package me.chonchol.andropos.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Product {
+import ir.mirrajabi.searchdialog.core.Searchable;
+
+public class Product implements Searchable{
 
     private Integer productId;
     private String productName;
@@ -11,6 +13,13 @@ public class Product {
     private String code;
     private Subcategory subcategory;
     private Double price;
+
+    public Product() {
+    }
+
+    public Product(String productName) {
+        this.productName = productName;
+    }
 
     @SerializedName("active")
     private Boolean isActive;
@@ -77,5 +86,11 @@ public class Product {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+
+    @Override
+    public String getTitle() {
+        return productName;
     }
 }

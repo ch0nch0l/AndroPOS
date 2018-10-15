@@ -50,11 +50,11 @@ public class ProductSearchAdapter extends BaseAdapter implements Filterable {
             inflater = (LayoutInflater) parent.getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        RowItemBinding rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.row_item, parent, false);
-        rowItemBinding.stringName.setText(mData.get(position));
+//        RowItemBinding rowItemBinding = DataBindingUtil.inflate(inflater, R.layout.row_item, parent, false);
+//        rowItemBinding.stringName.setText(mData.get(position));
 
 
-        return rowItemBinding.getRoot();
+        return convertView;
     }
 
     @Override
