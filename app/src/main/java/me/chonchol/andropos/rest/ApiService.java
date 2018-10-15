@@ -14,43 +14,45 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-
     //CATEGORY
-    @GET("/category")
+    @GET("/api/category")
     Call<List<Category>> getAllCategories();
 
-    @GET("/category/{cat_id}")
+    @GET("/api/category/{cat_id}")
     Call<Category> getCategoryById(@Path("cat_id") int catId);
 
-    @POST("/category")
+    @POST("/api/category")
     Call<Category> saveCategory(@Body Category category);
 
 
     //SUBCATEGORY
-    @GET("/subcategory")
+    @GET("/api/subcategory")
     Call<List<Subcategory>> getAllSubcategories();
 
-    @GET("/subcategory/cat/{cat_id}")
+    @GET("/api/subcategory/cat/{cat_id}")
     Call<List<Subcategory>> getSubcategoryListByCatId(@Path("cat_id") Integer id);
 
-    @POST("/subcategory")
+    @POST("/api/subcategory")
     Call<Subcategory> saveSubcategory(@Body Subcategory subcategory);
 
 
     //PRODUCTS
-    @GET("/product")
+    @GET("/api/product")
     Call<List<Product>> getAllProducts();
 
-    @POST("/product")
+    @POST("/api/product")
     Call<Product> saveProduct(@Body Product product);
 
 
     //STOCK
-    @GET("/stock")
+    @GET("/api/stock")
     Call<List<Stock>> getAllStockList();
 
-    @POST("/stock")
+    @POST("/api/stock")
     Call<Stock> saveStock(@Body Stock stock);
+
+    @GET("/api/stock/available")
+    Call<List<Stock>> getAvailableStockList();
 
 
 }

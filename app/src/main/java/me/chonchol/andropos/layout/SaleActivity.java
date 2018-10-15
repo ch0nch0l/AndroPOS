@@ -1,6 +1,7 @@
 package me.chonchol.andropos.layout;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,15 +14,27 @@ import com.stepstone.stepper.VerificationError;
 
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.StepperAdapter;
+import me.chonchol.andropos.interfaces.IDataManager;
+import me.chonchol.andropos.model.Customer;
 
-public class SaleActivity extends AppCompatActivity implements StepperLayout.StepperListener{
+public class SaleActivity extends AppCompatActivity implements StepperLayout.StepperListener, IDataManager {
 
     private StepperLayout stepperLayout;
+
+    private String data;
+    private static final String CURRENT_STEP_POSITION_KEY = "position";
+    private static final String DATA = "data";
+
+    private Customer customer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
+        if (savedInstanceState != null) {
+            savedInstanceState.getInt("position");
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,5 +73,23 @@ public class SaleActivity extends AppCompatActivity implements StepperLayout.Ste
     @Override
     public void onReturn() {
         finish();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putInt(CURRENT_STEP_POSITION_KEY, stepperLayout.getCurrentStepPosition());
+        outState.putString(DATA, this.data);
+        outState.putSerializable("CUSTOMER", this.customer);
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public void customerData(Customer customer) {
+        this.customer = customer;
+    }
+
+    @Override
+    public Customer getCustomerData() {
+        return customer;
     }
 }

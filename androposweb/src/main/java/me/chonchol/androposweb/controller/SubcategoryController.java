@@ -14,40 +14,35 @@ public class SubcategoryController {
     @Autowired
     SubcategoryRepository subcategoryRepository;
 
-    @GetMapping("/subcategory")
+    @GetMapping("/api/subcategory")
     public List<Subcategory> index(){
         return subcategoryRepository.findAll();
     }
 
-//    @GetMapping("subcategory/{cat_id}")
-//    public List<Subcategory> getSubCategoryByCatId(@PathVariable("cat_id") Integer id){
-//        return subcategoryRepository.findAll();
-//    }
-
-    @GetMapping("subcategory/cat/{cat_id}")
+    @GetMapping("/api/subcategory/cat/{cat_id}")
     public List<Subcategory> getSubCategoryByCatId(@PathVariable("cat_id") Integer id){
         return subcategoryRepository.getSubCategoryByCatId(id);
     }
 
-    @GetMapping("/subcategory/{subcat_id}")
+    @GetMapping("/api/subcategory/{subcat_id}")
     public Subcategory show(@PathVariable("subcat_id") Integer id){
         return subcategoryRepository.getOne(id);
     }
 
-    @PostMapping("/subcategory")
+    @PostMapping("/api/subcategory")
     @ResponseBody
     public Subcategory create(@RequestBody Subcategory subcategory){
         return subcategoryRepository.save(subcategory);
     }
 
-    @PutMapping("/subcategory/{subcat_id}")
+    @PutMapping("/api/subcategory/{subcat_id}")
     public Subcategory update(@PathVariable("subcat_id") Integer id, @RequestBody Subcategory subcategory){
         Subcategory newsubCategory = subcategoryRepository.getOne(id);
         newsubCategory = subcategory;
         return subcategoryRepository.save(newsubCategory);
     }
 
-    @DeleteMapping("/subcategory/{subcat_id}")
+    @DeleteMapping("/api/subcategory/{subcat_id}")
     public Boolean delete(@PathVariable("subcat_id") Integer id){
         subcategoryRepository.deleteById(id);
         return true;

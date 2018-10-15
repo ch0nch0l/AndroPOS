@@ -14,30 +14,30 @@ public class UsersController {
     @Autowired
     UsersRepository usersRepository;
 
-    @GetMapping("/users")
+    @GetMapping("/api/users")
     public List<Users> index(){
         return usersRepository.findAll();
     }
 
-    @GetMapping("/users/{users_id}")
+    @GetMapping("/api/users/{users_id}")
     public Users show(@PathVariable("users_id") Integer id){
         return usersRepository.getOne(id);
     }
 
-    @PostMapping("/users")
+    @PostMapping("/api/users")
     @ResponseBody
     public Users create(@RequestBody Users users){
         return usersRepository.save(users);
     }
 
-    @PutMapping("/users/{users_id}")
+    @PutMapping("/api/users/{users_id}")
     public Users update(@PathVariable("users_id") Integer id, @RequestBody Users users){
         Users newUsers = usersRepository.getOne(id);
         newUsers = users;
         return usersRepository.save(newUsers);
     }
 
-    @DeleteMapping("/users/{users_id}")
+    @DeleteMapping("/api/users/{users_id}")
     public Boolean delete(@PathVariable("users_id") Integer id){
         usersRepository.deleteById(id);
         return true;

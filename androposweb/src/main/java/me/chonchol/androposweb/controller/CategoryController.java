@@ -14,30 +14,30 @@ public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @GetMapping("/category")
+    @GetMapping("/api/category")
     public List<Category> index(){
         return categoryRepository.findAll();
     }
 
-    @GetMapping("/category/{cat_id}")
+    @GetMapping("/api/category/{cat_id}")
     public Category show(@PathVariable("cat_id") Integer id){
         return categoryRepository.getOne(id);
     }
 
-    @PostMapping("/category")
+    @PostMapping("/api/category")
     @ResponseBody
     public Category create(@RequestBody Category category){
         return categoryRepository.save(category);
     }
 
-    @PutMapping("/category/{cat_id}")
+    @PutMapping("/api/category/{cat_id}")
     public Category update(@PathVariable("cat_id") Integer id, @RequestBody Category category){
         Category newCategory = categoryRepository.getOne(id);
         newCategory = category;
         return categoryRepository.save(newCategory);
     }
 
-    @DeleteMapping("/category/{cat_id}")
+    @DeleteMapping("/api/category/{cat_id}")
     public Boolean delete(@PathVariable("cat_id") Integer id){
         categoryRepository.deleteById(id);
         return true;

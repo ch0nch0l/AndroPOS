@@ -14,32 +14,38 @@ public class StockController {
     @Autowired
     StockRepository stockRepository;
 
-    @GetMapping("/stock")
+    @GetMapping("/api/stock")
     public List<Stock> index(){
         return stockRepository.findAll();
     }
 
-    @GetMapping("/stock/{stock_id}")
+    @GetMapping("/api/stock/{stock_id}")
     public Stock show(@PathVariable("stock_id") Integer id){
         return stockRepository.getOne(id);
     }
 
-    @PostMapping("/stock")
+    @PostMapping("/api/stock")
     @ResponseBody
     public Stock create(@RequestBody Stock stock){
         return stockRepository.save(stock);
     }
 
-    @PutMapping("/stock/{stock_id}")
+    @PutMapping("/api/stock/{stock_id}")
     public Stock update(@PathVariable("stock_id") Integer id, @RequestBody Stock stock){
         Stock newStock = stockRepository.getOne(id);
         newStock = stock;
         return stockRepository.save(newStock);
     }
 
-    @DeleteMapping("/stock/{stock_id}")
+    @DeleteMapping("/api/stock/{stock_id}")
     public Boolean delete(@PathVariable("stock_id") Integer id){
         stockRepository.deleteById(id);
         return true;
+    }
+
+    //Native
+    @GetMapping("/api/stock/available")
+    public List<Stock> getAvailableStockList(){
+        return stockRepository.getAvailableStockList();
     }
 }

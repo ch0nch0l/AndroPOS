@@ -1,5 +1,6 @@
 package me.chonchol.andropos.layout.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,13 +18,22 @@ import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.interfaces.IDataManager;
+import me.chonchol.andropos.model.Customer;
 import me.chonchol.andropos.model.Product;
+import me.chonchol.andropos.model.Stock;
+import me.chonchol.andropos.rest.ApiClient;
+import me.chonchol.andropos.rest.ApiService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by mehedi.chonchol on 14-Oct-18.
@@ -32,6 +42,16 @@ import me.chonchol.andropos.model.Product;
 public class SaleProductFragment extends Fragment implements BlockingStep {
 
     private Button btnSearchProduct, btnScanProduct;
+
+    private IDataManager dataManager;
+    private ApiService apiService;
+    private ArrayList<Product> products;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataManager = (IDataManager) context;
+    }
 
     @Nullable
     @Override
@@ -48,6 +68,8 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
             public void run() {
 
                 //you can do anythings you want
+                Customer customer = dataManager.getCustomerData();
+                Toasty.success(getActivity(), customer.getCustomerName(), Toast.LENGTH_SHORT, true).show();
                 callback.goToNextStep();
             }
         }, 0L);// delay open another fragment,
@@ -70,7 +92,7 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
     public void onError(@NonNull VerificationError error) {
     }
 
-    private void initializeView(View view){
+    public void initializeView(View view){
         btnSearchProduct = view.findViewById(R.id.btnSearchProduct);
         btnScanProduct = view.findViewById(R.id.btnScanProduct);
 
@@ -78,7 +100,7 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
             @Override
             public void onClick(View view) {
                 new SimpleSearchDialogCompat<>(getActivity(), "Search",
-                        "Enter Product Name", null, createSampleData(),
+                        "Enter Product Name", null, getProductList(),
                         new SearchResultListener<Product>() {
                     @Override
                     public void onSelected(BaseSearchDialogCompat dialog, Product product, int i) {
@@ -90,17 +112,29 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
         });
     }
 
-    private ArrayList<Product> createSampleData(){
-        ArrayList<Product> items = new ArrayList<>();
-        items.add(new Product("First item"));
-        items.add(new Product("Second item"));
-        items.add(new Product("Third item"));
-        items.add(new Product("The ultimate item"));
-        items.add(new Product("Last item"));
-        items.add(new Product("Lorem ipsum"));
-        items.add(new Product("Dolor sit"));
-        items.add(new Product("Some random word"));
-        items.add(new Product("guess who's back"));
-        return items;
+    private ArrayList<Product> getProductList(){
+
+        apiService = ApiClient.getClient().create(ApiService.class);
+        Call<List<Stock>> getAvailableStockList = apiService.getAvailableStockList();
+
+        getAvailableStockList.enqueue(new Callback<List<Stock>>() {
+            @Override
+            public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
+                response.body();
+                List<Stock> stockList = new ArrayList<>();
+                for (Stock stock: response.body()){
+                    products = new ArrayList<>();
+                    products.add(stock.getProduct());
+                    stockList.add(stock);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Stock>> call, Throwable t) {
+
+            }
+        });
+
+        return products;
     }
 }
