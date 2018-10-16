@@ -51,8 +51,8 @@ public interface ApiService {
     @POST("/api/stock")
     Call<Stock> saveStock(@Body Stock stock);
 
-    @GET("/api/stock/available")
-    Call<List<Stock>> getAvailableStockList();
+    @GET("/api/stock/available/{quantity}")
+    Call<List<Stock>> getAvailableStockList(@Path("quantity") Integer quantity);
 
 
 }

@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +21,16 @@ import com.stepstone.stepper.VerificationError;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import es.dmoral.toasty.Toasty;
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.adapter.CartAdapter;
 import me.chonchol.andropos.interfaces.IDataManager;
+import me.chonchol.andropos.model.CartProduct;
 import me.chonchol.andropos.model.Customer;
 import me.chonchol.andropos.model.Product;
 import me.chonchol.andropos.model.Stock;
@@ -42,10 +47,13 @@ import retrofit2.Response;
 public class SaleProductFragment extends Fragment implements BlockingStep {
 
     private Button btnSearchProduct, btnScanProduct;
+    private RecyclerView cartListView;
 
     private IDataManager dataManager;
-    private ApiService apiService;
-    private ArrayList<Product> products;
+    private List<Stock> stockList = new ArrayList<>();
+    private ArrayList<Product> products = new ArrayList<>();
+    private CartAdapter adapter;
+
 
     @Override
     public void onAttach(Context context) {
@@ -75,64 +83,86 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
             }
         }, 0L);// delay open another fragment,
     }
+
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
     }
+
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {
         callback.goToPrevStep();
     }
+
     @Override
     public VerificationError verifyStep() {
         return null;
     }
+
     @Override
     public void onSelected() {
     }
+
     @Override
     public void onError(@NonNull VerificationError error) {
     }
 
-    public void initializeView(View view){
+    public void initializeView(View view) {
         btnSearchProduct = view.findViewById(R.id.btnSearchProduct);
         btnScanProduct = view.findViewById(R.id.btnScanProduct);
+        cartListView = view.findViewById(R.id.cartListView);
 
         btnSearchProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ArrayList<Product> productList = new ArrayList<>();
+                productList = getProductList();
                 new SimpleSearchDialogCompat<>(getActivity(), "Search",
-                        "Enter Product Name", null, getProductList(),
+                        "Enter Product Name", null, productList,
                         new SearchResultListener<Product>() {
-                    @Override
-                    public void onSelected(BaseSearchDialogCompat dialog, Product product, int i) {
-                        Toasty.success(getActivity(), product.getTitle(), Toast.LENGTH_SHORT, true).show();
-                        dialog.dismiss();
-                    }
-                }).show();
+                            @Override
+                            public void onSelected(BaseSearchDialogCompat dialog, final Product product, int i) {
+                                List<CartProduct> cartProductList = new ArrayList<>();
+                                Integer quantity = 1;
+
+                                if (cartProductList.isEmpty()) {
+                                    cartProductList.add(new CartProduct(product, quantity));
+                                } else {
+                                    //TODO:Update Quantity if exists into list else add new
+                                }
+
+                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                                cartListView.setLayoutManager(layoutManager);
+                                adapter = new CartAdapter(getContext(),cartProductList, quantity);
+                                cartListView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+
+                                Toasty.success(getActivity(), product.getTitle(), Toast.LENGTH_SHORT, true).show();
+                                dialog.dismiss();
+                            }
+                        }).show();
             }
         });
     }
 
-    private ArrayList<Product> getProductList(){
+    private ArrayList<Product> getProductList() {
 
-        apiService = ApiClient.getClient().create(ApiService.class);
-        Call<List<Stock>> getAvailableStockList = apiService.getAvailableStockList();
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<List<Stock>> getAvailableStockList = apiService.getAvailableStockList(0);
 
         getAvailableStockList.enqueue(new Callback<List<Stock>>() {
+
             @Override
             public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
-                response.body();
-                List<Stock> stockList = new ArrayList<>();
-                for (Stock stock: response.body()){
-                    products = new ArrayList<>();
-                    products.add(stock.getProduct());
+                products.clear();
+                for (Stock stock : response.body()) {
                     stockList.add(stock);
+                    products.add(stock.getProduct());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Stock>> call, Throwable t) {
-
+                Toasty.error(getContext(), "Can't fetch any product!!!", Toast.LENGTH_SHORT, true).show();
             }
         });
 

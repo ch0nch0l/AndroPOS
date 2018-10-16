@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Integer> {
 
-    @Query(value = "SELECT * FROM STOCK A WHERE A.quantity > 0", nativeQuery = true)
-    public List<Stock> getAvailableStockList();
-
+    @Query(value = "SELECT * FROM STOCK A WHERE A.quantity > :quantity", nativeQuery = true)
+    public List<Stock> getAvailableStockList(@Param("quantity") Integer quantity);
 }

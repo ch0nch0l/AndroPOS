@@ -12,10 +12,13 @@ import android.widget.Toast;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
+import java.util.List;
+
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.StepperAdapter;
 import me.chonchol.andropos.interfaces.IDataManager;
 import me.chonchol.andropos.model.Customer;
+import me.chonchol.andropos.model.Product;
 
 public class SaleActivity extends AppCompatActivity implements StepperLayout.StepperListener, IDataManager {
 
@@ -26,6 +29,7 @@ public class SaleActivity extends AppCompatActivity implements StepperLayout.Ste
     private static final String DATA = "data";
 
     private Customer customer;
+    private List<Product> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +81,9 @@ public class SaleActivity extends AppCompatActivity implements StepperLayout.Ste
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        outState.putInt(CURRENT_STEP_POSITION_KEY, stepperLayout.getCurrentStepPosition());
-        outState.putString(DATA, this.data);
-        outState.putSerializable("CUSTOMER", this.customer);
+//        outState.putInt(CURRENT_STEP_POSITION_KEY, stepperLayout.getCurrentStepPosition());
+//        outState.putString(DATA, this.data);
+//        outState.putSerializable("CUSTOMER", this.customer);
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
@@ -91,5 +95,15 @@ public class SaleActivity extends AppCompatActivity implements StepperLayout.Ste
     @Override
     public Customer getCustomerData() {
         return customer;
+    }
+
+    @Override
+    public void cartProducts(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    @Override
+    public List<Product> getCartProductList() {
+        return productList;
     }
 }

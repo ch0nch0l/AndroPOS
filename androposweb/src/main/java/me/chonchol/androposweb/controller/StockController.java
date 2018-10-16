@@ -3,12 +3,14 @@ package me.chonchol.androposweb.controller;
 import me.chonchol.androposweb.entity.Stock;
 import me.chonchol.androposweb.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @RestController
-public class StockController {
+public class StockController extends BaseController{
 
 
     @Autowired
@@ -44,8 +46,14 @@ public class StockController {
     }
 
     //Native
-    @GetMapping("/api/stock/available")
-    public List<Stock> getAvailableStockList(){
-        return stockRepository.getAvailableStockList();
+//    @GetMapping("/api/stock/available")
+//    public List<Stock> getAvailableStockList(){
+//        Query query = entityManager.createNativeQuery("SELECT * FROM STOCK A WHERE A.quantity > 0");
+//        return query.getResultList();
+//    }
+
+    @GetMapping("/api/stock/available/{quantity}")
+    public List<Stock> getAvailableStockList(@PathVariable("quantity") Integer quantity){
+        return stockRepository.getAvailableStockList(quantity);
     }
 }

@@ -98,10 +98,10 @@
 
     </LinearLayout>
 
-    <com.weiwangcn.betterspinner.library.BetterSpinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Select Payment Type"/>
+    <!--<com.weiwangcn.betterspinner.library.BetterSpinner-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Select Payment Type"/>-->
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
