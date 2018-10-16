@@ -1,15 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/stepperLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="8dp"
     android:layout_margin="8dp"
-    android:orientation="vertical"
-    app:ms_stepperType="tabs">
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#eeeeee"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CUSTOMER INFORMATION"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:padding="2dp"
+            android:background="@color/colorFade"
+            android:textColor="@color/colorPrimaryDark"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="5"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_margin="4dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorAccent"
+                android:text="Customer Name:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="Phone Number:"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="Address:"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="4dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    android:text="Mehedi Hasan Chonchol"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    android:text="+8801678035887"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    android:text="Savar, Dhaka -1344"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.weiwangcn.betterspinner.library.BetterSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Payment Type"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

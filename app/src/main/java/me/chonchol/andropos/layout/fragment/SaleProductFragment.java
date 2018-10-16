@@ -70,6 +70,7 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
                 //you can do anythings you want
                 Customer customer = dataManager.getCustomerData();
                 Toasty.success(getActivity(), customer.getCustomerName(), Toast.LENGTH_SHORT, true).show();
+                dataManager.cartProducts(products);
                 callback.goToNextStep();
             }
         }, 0L);// delay open another fragment,
