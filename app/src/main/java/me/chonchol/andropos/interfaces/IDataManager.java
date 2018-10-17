@@ -2,6 +2,7 @@ package me.chonchol.andropos.interfaces;
 
 import java.util.List;
 
+import me.chonchol.andropos.model.CartProduct;
 import me.chonchol.andropos.model.Customer;
 import me.chonchol.andropos.model.Product;
 
@@ -11,7 +12,7 @@ public interface IDataManager {
 
     Customer getCustomerData();
 
-    void cartProducts(List<Product> productList);
+    void cartProducts(List<CartProduct> productList);
 
-    List<Product> getCartProductList();
+    List<CartProduct> getCartProductList();
 }

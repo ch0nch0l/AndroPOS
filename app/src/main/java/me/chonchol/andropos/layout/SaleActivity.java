@@ -17,6 +17,7 @@ import java.util.List;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.StepperAdapter;
 import me.chonchol.andropos.interfaces.IDataManager;
+import me.chonchol.andropos.model.CartProduct;
 import me.chonchol.andropos.model.Customer;
 import me.chonchol.andropos.model.Product;
 
@@ -29,7 +30,7 @@ public class SaleActivity extends AppCompatActivity implements StepperLayout.Ste
     private static final String DATA = "data";
 
     private Customer customer;
-    private List<Product> productList;
+    private List<CartProduct> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +99,12 @@ public class SaleActivity extends AppCompatActivity implements StepperLayout.Ste
     }
 
     @Override
-    public void cartProducts(List<Product> productList) {
+    public void cartProducts(List<CartProduct> productList) {
         this.productList = productList;
     }
 
     @Override
-    public List<Product> getCartProductList() {
+    public List<CartProduct> getCartProductList() {
         return productList;
     }
 }

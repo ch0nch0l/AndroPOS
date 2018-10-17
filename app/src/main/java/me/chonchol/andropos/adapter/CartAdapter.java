@@ -24,12 +24,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private Context context;
     private List<CartProduct> cartProductList;
-    private Integer quantity;
 
-    public CartAdapter(Context context, List<CartProduct> cartProductList, Integer quantity) {
+    public CartAdapter(Context context, List<CartProduct> cartProductList) {
         this.context = context;
         this.cartProductList = cartProductList;
-        this.quantity = quantity;
     }
 
     @NonNull
@@ -49,7 +47,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.txtCartCategory.setText(cartProduct.getProduct().getSubcategory().getCategory().getCatName().toString());
         holder.txtCartUnitPrice.setText(cartProduct.getProduct().getPrice().toString());
         holder.inputCartQuantity.setText(cartProduct.getQuantity().toString());
-        holder.txtCartTotalPrice.setText(String.valueOf(quantity * cartProduct.getProduct().getPrice()));
+        holder.txtCartTotalPrice.setText(String.valueOf(cartProduct.getQuantity() * cartProduct.getProduct().getPrice()));
 
     }
 

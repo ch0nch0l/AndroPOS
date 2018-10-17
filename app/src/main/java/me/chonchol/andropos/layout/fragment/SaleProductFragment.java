@@ -52,6 +52,7 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
     private IDataManager dataManager;
     private List<Stock> stockList = new ArrayList<>();
     private ArrayList<Product> products = new ArrayList<>();
+    List<CartProduct> cartProductList;
     private CartAdapter adapter;
 
 
@@ -78,7 +79,7 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
                 //you can do anythings you want
                 Customer customer = dataManager.getCustomerData();
                 Toasty.success(getActivity(), customer.getCustomerName(), Toast.LENGTH_SHORT, true).show();
-                dataManager.cartProducts(products);
+                dataManager.cartProducts(cartProductList);
                 callback.goToNextStep();
             }
         }, 0L);// delay open another fragment,
@@ -121,18 +122,30 @@ public class SaleProductFragment extends Fragment implements BlockingStep {
                         new SearchResultListener<Product>() {
                             @Override
                             public void onSelected(BaseSearchDialogCompat dialog, final Product product, int i) {
-                                List<CartProduct> cartProductList = new ArrayList<>();
+                                cartProductList = new ArrayList<>();
                                 Integer quantity = 1;
+                                Boolean isNewItem = false;
 
                                 if (cartProductList.isEmpty()) {
                                     cartProductList.add(new CartProduct(product, quantity));
                                 } else {
                                     //TODO:Update Quantity if exists into list else add new
+                                    for (CartProduct cartProduct : cartProductList){
+                                        if (cartProduct.getProduct().getProductId().equals(product.getProductId())){
+                                            cartProductList.get(i).setQuantity(cartProductList.get(i).getQuantity() + 1);
+                                        } else {
+                                            isNewItem = true;
+                                        }
+                                    }
+
+                                    if (isNewItem){
+                                        cartProductList.add(new CartProduct(product,quantity));
+                                    }
                                 }
 
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
                                 cartListView.setLayoutManager(layoutManager);
-                                adapter = new CartAdapter(getContext(),cartProductList, quantity);
+                                adapter = new CartAdapter(getContext(), cartProductList);
                                 cartListView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
 

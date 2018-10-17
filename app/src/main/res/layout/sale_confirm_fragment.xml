@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/stepperLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stepperLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp"
     android:layout_margin="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,81 +16,84 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CUSTOMER INFORMATION"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:padding="2dp"
             android:background="@color/colorFade"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="CUSTOMER INFORMATION"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="5"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="5">
 
             <LinearLayout
-                android:layout_margin="4dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:layout_weight="2"
                 android:gravity="right"
                 android:orientation="vertical">
 
                 <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textSize="16dp"
+                    android:text="Customer Name:"
                     android:textColor="@color/colorAccent"
-                android:text="Customer Name:"/>
+                    android:textSize="16dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textSize="16dp"
+                    android:text="Phone Number:"
                     android:textColor="@color/colorAccent"
-                    android:text="Phone Number:"/>
+                    android:textSize="16dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:textSize="16dp"
+                    android:text="Address:"
                     android:textColor="@color/colorAccent"
-                    android:text="Address:"/>
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_margin="4dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:layout_weight="3"
                 android:gravity="right"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtCustomerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Mehedi Hasan Chonchol"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"
-                    android:text="Mehedi Hasan Chonchol"/>
+                    android:textSize="16dp" />
 
                 <TextView
+                    android:id="@+id/txtCustomerPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="+8801678035887"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"
-                    android:text="+8801678035887"/>
+                    android:textSize="16dp" />
 
                 <TextView
+                    android:id="@+id/txtCustomerAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Savar, Dhaka -1344"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16dp"
-                    android:text="Savar, Dhaka -1344"/>
+                    android:textSize="16dp" />
 
             </LinearLayout>
 
@@ -99,11 +102,19 @@
     </LinearLayout>
 
     <!--<com.weiwangcn.betterspinner.library.BetterSpinner-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:hint="Select Payment Type"/>-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:hint="Select Payment Type"/>-->
+
+    <com.weiwangcn.betterspinner.library.BetterSpinner
+        android:id="@+id/dropdownPaymentType"
+        android:layout_width="match_parent"
+        android:hint="Select Payment Type"
+        android:layout_height="wrap_content"
+        android:entries="@array/payment_type_array"/>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/cartListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

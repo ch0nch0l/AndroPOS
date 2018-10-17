@@ -33,6 +33,13 @@
     </string-array>
     <string name="title_activity_add_category">AddCategoryActivity</string>
 
+    <!--Payment Type-->
+    <string-array name="payment_type_array">
+        <item>Cash</item>
+        <item>bKash</item>
+        <item>Rocket</item>
+    </string-array>
+
     <!--GLOBAL-->
     <string name="is_active">Is Active ?</string>
     <string name="title_activity_category">CategoryActivity</string>
@@ -41,5 +48,6 @@
     <string name="permission">Permission Needed.</string>
     <string name="storage_permission">Storage permission is needed for read or write file.</string>
     <string name="title_activity_add_customer">AddCustomerActivity</string>
+
 
 </resources>
