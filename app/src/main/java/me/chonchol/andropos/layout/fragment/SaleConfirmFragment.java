@@ -69,6 +69,7 @@ public class SaleConfirmFragment extends Fragment implements BlockingStep {
     }
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+        callback.complete();
     }
     @Override
     public void onBackClicked(StepperLayout.OnBackClickedCallback callback) {

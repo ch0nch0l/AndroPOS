@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wang.avi.AVLoadingIndicatorView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/progress"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/AVLoadingIndicatorView"
+    android:visibility="visible"
+    app:indicatorName="BallGridPulseIndicator"
+    app:indicatorColor="@color/colorPrimary">
+
+</com.wang.avi.AVLoadingIndicatorView>
