@@ -1,5 +1,7 @@
 package me.chonchol.andropos.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by mehedi.chonchol on 18-Oct-18.
  */

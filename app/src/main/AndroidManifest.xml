@@ -29,7 +29,6 @@
         </activity>
         <activity android:name=".layout.AddProductActivity" />
         <activity android:name=".layout.StockActivity" />
-        <activity android:name=".layout.SaleRecordActivity" />
         <activity android:name=".layout.ConfirmSellActivity" />
         <activity android:name=".layout.AddUserActivity" />
         <activity android:name=".layout.UserListActivity" />
@@ -38,14 +37,9 @@
         <activity android:name=".layout.CategoryListActivity" />
         <activity android:name=".layout.AddCategoryActivity" />
         <activity android:name=".layout.CategoryActivity" />
-        <activity
-            android:name=".layout.AddSubcategoryActivity"
-            android:label="@string/title_activity_add_subcategory"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".layout.SaleActivity"
-            android:label="@string/title_activity_add_customer"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".layout.AddSubcategoryActivity" />
+        <activity android:name=".layout.AddSaleActivity" />
+        <activity android:name=".layout.SaleRecordActivity"/>
     </application>
 
 </manifest>

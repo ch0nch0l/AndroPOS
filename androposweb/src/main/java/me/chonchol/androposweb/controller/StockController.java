@@ -3,15 +3,13 @@ package me.chonchol.androposweb.controller;
 import me.chonchol.androposweb.entity.Stock;
 import me.chonchol.androposweb.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Query;
 import java.util.List;
 
 @RestController
 public class StockController extends BaseController{
-
 
     @Autowired
     StockRepository stockRepository;
@@ -45,15 +43,15 @@ public class StockController extends BaseController{
         return true;
     }
 
-    //Native
-//    @GetMapping("/api/stock/available")
-//    public List<Stock> getAvailableStockList(){
-//        Query query = entityManager.createNativeQuery("SELECT * FROM STOCK A WHERE A.quantity > 0");
-//        return query.getResultList();
-//    }
-
     @GetMapping("/api/stock/available/{quantity}")
     public List<Stock> getAvailableStockList(@PathVariable("quantity") Integer quantity){
         return stockRepository.getAvailableStockList(quantity);
+    }
+
+    @Transactional
+    @ResponseBody
+    @PutMapping("/api/stock/{product_id}/{quantity}")
+    public void updateStockByProductId(@PathVariable("product_id") Integer productId, @PathVariable("quantity") Integer quantity){
+        stockRepository.updateStockByProductId(productId, quantity);
     }
 }

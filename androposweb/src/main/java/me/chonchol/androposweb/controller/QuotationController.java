@@ -36,7 +36,7 @@ public class QuotationController {
         return quotationRepository.save(newQuotation);
     }
 
-    @DeleteMapping("/api/quotation/{quotation_id}")
+    @DeleteMapping("/api/quotation/quotation/{quotation_id}")
     public Boolean delete(@PathVariable("quotation_id") Integer id){
         quotationRepository.deleteById(id);
         return true;

@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -57,8 +58,8 @@ public interface ApiService {
     @GET("/api/stock/available/{quantity}")
     Call<List<Stock>> getAvailableStockList(@Path("quantity") Integer quantity);
 
-    @POST("/api/stock/{product_id}")
-    Call<Stock> updateStock(@Path("product_id") Integer id);
+    @PUT("/api/stock/{product_id}/{quantity}")
+    Call<Stock> updateStockByProductId(@Path("product_id") Integer id, @Path("quantity") Integer quantity);
 
     //CUSTOMER
     @POST("/api/customer")

@@ -48,6 +48,8 @@
     <string name="permission">Permission Needed.</string>
     <string name="storage_permission">Storage permission is needed for read or write file.</string>
     <string name="title_activity_add_customer">AddCustomerActivity</string>
+    <string name="title_activity_add_sale">AddSaleActivity</string>
+    <string name="title_activity_sale_rocord">SaleRocordActivity</string>
 
 
 </resources>

@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.model.CartProduct;
 import me.chonchol.andropos.model.Product;
@@ -49,6 +52,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.inputCartQuantity.setText(cartProduct.getQuantity().toString());
         holder.txtCartTotalPrice.setText(String.valueOf(cartProduct.getQuantity() * cartProduct.getProduct().getPrice()));
 
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cartProductList.remove(position);
+                Toasty.info(context, "Product deleted!!", Toast.LENGTH_LONG, true).show();
+                notifyDataSetChanged();
+            }
+        });
+
     }
 
     @Override
@@ -59,6 +71,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public class CartViewHolder extends RecyclerView.ViewHolder {
         private TextView txtCartProductName, txtCartCategory, txtCartTotalPrice;
         private EditText inputCartQuantity, txtCartUnitPrice;
+        private ImageView btnDelete;
 
         public CartViewHolder(View itemView) {
             super(itemView);
@@ -68,6 +81,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             txtCartTotalPrice = itemView.findViewById(R.id.txtCartTotalPrice);
             inputCartQuantity = itemView.findViewById(R.id.inputCartQuantity);
             txtCartUnitPrice = itemView.findViewById(R.id.txtCartUnitPrice);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
 
         }
     }

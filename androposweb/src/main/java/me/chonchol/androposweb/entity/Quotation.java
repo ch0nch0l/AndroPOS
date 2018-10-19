@@ -11,7 +11,7 @@ import java.util.Date;
 public class Quotation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quotation_id")
     private Integer quotationId;
 
@@ -20,7 +20,7 @@ public class Quotation {
     private Customers customer;
 
     @Column(name = "order_date")
-    private Date orderDate;
+    private String orderDate;
 
     @Column(name = "order_status")
     private Integer orderStatus;
@@ -41,11 +41,11 @@ public class Quotation {
         this.customer = customer;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 

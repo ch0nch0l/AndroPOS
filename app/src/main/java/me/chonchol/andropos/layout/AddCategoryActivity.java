@@ -9,8 +9,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.wang.avi.AVLoadingIndicatorView;
-
 import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.model.Category;
@@ -25,7 +23,6 @@ public class AddCategoryActivity extends AppCompatActivity {
     private EditText inputCatName;
     private CheckBox chkIsCatActive;
     private Category category;
-    private AVLoadingIndicatorView progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +58,21 @@ public class AddCategoryActivity extends AppCompatActivity {
     private void initializeView(){
         inputCatName = findViewById(R.id.inputCatName);
         chkIsCatActive = findViewById(R.id.catIsActive);
-        progress = findViewById(R.id.progress);
     }
 
     private void saveCategory(Category category) {
-
-        progress.show();
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.saveCategory(category).enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
                 if (response.isSuccessful()){
-                    progress.hide();
                     Toasty.success(getApplicationContext(), "Category added successfully!", Toast.LENGTH_SHORT, true).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-                progress.hide();
                 Toasty.error(getApplicationContext(), "Category addition failed!!!", Toast.LENGTH_SHORT, true).show();
             }
         });

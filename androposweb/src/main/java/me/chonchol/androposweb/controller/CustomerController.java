@@ -14,7 +14,7 @@ public class CustomerController {
     @Autowired
     CustomerRepository customerRepository;
 
-    @GetMapping("/api/customers")
+    @GetMapping("/api/customer")
     public List<Customers> index(){
         return customerRepository.findAll();
     }
@@ -24,20 +24,20 @@ public class CustomerController {
         return customerRepository.getOne(id);
     }
 
-    @PostMapping("/api/customers")
+    @PostMapping("/api/customer")
     @ResponseBody
     public Customers create(@RequestBody Customers customer){
         return customerRepository.save(customer);
     }
 
-    @PutMapping("/api/customers/{customer_id}")
+    @PutMapping("/api/customer/{customer_id}")
     public Customers update(@PathVariable("customer_id") Integer id, @RequestBody Customers customer){
         Customers newCustomer = customerRepository.getOne(id);
         newCustomer = customer;
         return customerRepository.save(newCustomer);
     }
 
-    @DeleteMapping("/api/customers/{customer_id}")
+    @DeleteMapping("/api/customer/{customer_id}")
     public Boolean delete(@PathVariable("customer_id") Integer id){
         customerRepository.deleteById(id);
         return true;

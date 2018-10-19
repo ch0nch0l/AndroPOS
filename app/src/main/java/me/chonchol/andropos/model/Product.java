@@ -13,6 +13,8 @@ public class Product implements Searchable{
     private String code;
     private Subcategory subcategory;
     private Double price;
+    @SerializedName("active")
+    private Boolean isActive;
 
     public Product() {
     }
@@ -20,9 +22,6 @@ public class Product implements Searchable{
     public Product(String productName) {
         this.productName = productName;
     }
-
-    @SerializedName("active")
-    private Boolean isActive;
 
     public Integer getProductId() {
         return productId;

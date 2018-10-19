@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import me.chonchol.andropos.R;
-import me.chonchol.andropos.layout.SaleActivity;
+import me.chonchol.andropos.layout.AddSaleActivity;
 import me.chonchol.andropos.layout.SaleRecordActivity;
 
 /**
@@ -82,7 +82,7 @@ public class SaleFragment extends Fragment {
         btnAddSale.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SaleActivity.class);
+                Intent intent = new Intent(getContext(), AddSaleActivity.class);
                 startActivity(intent);
             }
         });

@@ -8,11 +8,11 @@ import me.chonchol.andropos.model.Product;
 
 public interface IDataManager {
 
-    void customerData(Customer customer);
+    void setCustomerData(Customer customer);
 
     Customer getCustomerData();
 
-    void cartProducts(List<CartProduct> productList);
+    void setCartProductList(List<CartProduct> productList);
 
     List<CartProduct> getCartProductList();
 }

@@ -11,11 +11,11 @@ import javax.persistence.*;
 public class QuotationList {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quotelist_id")
     private Integer quoteListId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "quotation_id")
     private Quotation quotation;
 
@@ -28,6 +28,22 @@ public class QuotationList {
 
     @Column(name = "total_price")
     private Double totalPrice;
+
+    public Integer getQuoteListId() {
+        return quoteListId;
+    }
+
+    public void setQuoteListId(Integer quoteListId) {
+        this.quoteListId = quoteListId;
+    }
+
+    public Quotation getQuotation() {
+        return quotation;
+    }
+
+    public void setQuotation(Quotation quotation) {
+        this.quotation = quotation;
+    }
 
     public Product getProduct() {
         return product;

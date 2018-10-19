@@ -12,7 +12,7 @@ public class Quotation {
 
     private Customer customer;
 
-    private Date orderDate;
+    private String orderDate;
 
     private Integer orderStatus;
 
@@ -32,11 +32,11 @@ public class Quotation {
         this.customer = customer;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
