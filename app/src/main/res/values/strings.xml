@@ -25,6 +25,11 @@
     <string name="sale_record">SALE RECORD</string>
 
 
+    <!--User-->
+    <string name="user_add">ADD USER</string>
+    <string name="user_list">USER LIST</string>
+
+
     <!--Category-->
     <string-array name="category">
         <item>--Select Category--</item>
@@ -50,6 +55,8 @@
     <string name="title_activity_add_customer">AddCustomerActivity</string>
     <string name="title_activity_add_sale">AddSaleActivity</string>
     <string name="title_activity_sale_rocord">SaleRocordActivity</string>
+    <string name="title_activity_add_user">AddUserActivity</string>
+    <string name="title_activity_user_list">UserListActivity</string>
 
 
 </resources>

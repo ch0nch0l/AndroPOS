@@ -30,8 +30,6 @@
         <activity android:name=".layout.AddProductActivity" />
         <activity android:name=".layout.StockActivity" />
         <activity android:name=".layout.ConfirmSellActivity" />
-        <activity android:name=".layout.AddUserActivity" />
-        <activity android:name=".layout.UserListActivity" />
         <activity android:name=".layout.ProfileActivity" />
         <activity android:name=".layout.LoginActivity" />
         <activity android:name=".layout.CategoryListActivity" />
@@ -39,7 +37,9 @@
         <activity android:name=".layout.CategoryActivity" />
         <activity android:name=".layout.AddSubcategoryActivity" />
         <activity android:name=".layout.AddSaleActivity" />
-        <activity android:name=".layout.SaleRecordActivity"/>
+        <activity android:name=".layout.SaleRecordActivity" />
+        <activity android:name=".layout.AddUserActivity"/>
+        <activity android:name=".layout.UserListActivity"/>
     </application>
 
 </manifest>

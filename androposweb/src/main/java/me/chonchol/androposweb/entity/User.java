@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-@Table(name = "USERS")
-public class Users {
+@Table(name = "USER")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,14 @@ public class Users {
     @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
-
     @Column(name = "password")
     private String password;
+
+    @Column(name = "user_role")
+    private Integer userRole;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 
     public Integer getUserId() {
         return userId;
@@ -40,19 +43,27 @@ public class Users {
         this.userName = userName;
     }
 
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Integer userRole) {
+        this.userRole = userRole;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }

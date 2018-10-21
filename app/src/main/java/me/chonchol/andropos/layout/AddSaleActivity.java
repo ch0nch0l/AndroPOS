@@ -3,7 +3,6 @@ package me.chonchol.andropos.layout;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -371,7 +369,7 @@ public class AddSaleActivity extends AppCompatActivity {
             public void onResponse(Call<Sale> call, Response<Sale> response) {
                 if (response.isSuccessful()) {
                     updateStock();
-                    progressDialog.hide();
+                    progressDialog.dismiss();
                     Toasty.success(getApplicationContext(), "Sale Successful.!", Toast.LENGTH_SHORT, true).show();
                     finish();
                 }

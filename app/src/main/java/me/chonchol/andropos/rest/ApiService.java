@@ -10,6 +10,7 @@ import me.chonchol.andropos.model.QuotationList;
 import me.chonchol.andropos.model.Sale;
 import me.chonchol.andropos.model.Stock;
 import me.chonchol.andropos.model.Subcategory;
+import me.chonchol.andropos.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -70,6 +71,10 @@ public interface ApiService {
     Call<Quotation> createQuotation(@Body Quotation quotation);
 
     //QUOTATIONLIST
+
+    @GET("/api/quotationlist")
+    Call<List<QuotationList>> getQuotationList();
+
     @POST("/api/quotationlist")
     Call<QuotationList> createQuotationList(@Body QuotationList quotationlist);
 
@@ -77,5 +82,12 @@ public interface ApiService {
     @POST("/api/sale")
     Call<Sale> createSale(@Body Sale sale);
 
+
+    //USER
+    @GET("/api/user/{user_name}")
+    Call<User> getUserByUserName(@Path("user_name") String userName);
+
+    @POST("/api/user")
+    Call<User> createNewUser(@Body User user);
 
 }

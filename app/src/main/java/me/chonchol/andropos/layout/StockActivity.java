@@ -92,14 +92,6 @@ public class StockActivity extends AppCompatActivity {
 
         initializeView();
 
-        adapter = new StockListAdapter(getApplicationContext(), getStockList());
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        stockListView.setLayoutManager(layoutManager);
-        stockListView.setItemAnimator(new DefaultItemAnimator());
-        stockListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        stockListView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
         FloatingActionButton btnGenerateStockReport = (FloatingActionButton) findViewById(R.id.btnGenerateStockReport);
 
         btnGenerateStockReport.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +155,14 @@ public class StockActivity extends AppCompatActivity {
     //View Initialization
     private void initializeView() {
         stockListView = findViewById(R.id.stockListView);
+
+        adapter = new StockListAdapter(getApplicationContext(), getStockList());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        stockListView.setLayoutManager(layoutManager);
+        stockListView.setItemAnimator(new DefaultItemAnimator());
+        stockListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        stockListView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     //Generate PDF Report for Stock
