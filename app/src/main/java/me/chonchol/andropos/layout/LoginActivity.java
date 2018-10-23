@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.helper.EncryptorHelper;
 import me.chonchol.andropos.model.User;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
@@ -22,6 +24,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputUserName, inputUserPassword;
+    private TextView txtRegister, txtForgotPassword;
     private FloatingActionButton btnLogin;
     private LinearLayout layoutLogin;
     private String userName, userPassword, dyctyptedPass;
@@ -39,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         if (LoginSharedPreference.getLoggedInStatus(getApplicationContext())){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
         } else {
             layoutLogin.setVisibility(View.VISIBLE);
         }
@@ -53,36 +57,54 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        txtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     private void userLogin(String userName, String userPassword) {
         apiService = ApiClient.getClient().create(ApiService.class);
-        Call<User> userLogin = apiService.getUserByUserName(userName);
-
-        userLogin.enqueue(new Callback<User>() {
+        apiService.getUserByUserName(userName).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()){
                     user = response.body();
 
-                    //TODO:decrypt
-                    dyctyptedPass = null;
-                    if (dyctyptedPass.equals(userPassword)){
-                        LoginSharedPreference.setLoggedIn(getApplicationContext(), true);
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                    if (user.getActive()){
+                        try {
+                            dyctyptedPass = EncryptorHelper.decrypt(user.getPassword());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if (dyctyptedPass.equals(userPassword)){
+                            LoginSharedPreference.setLoggedIn(getApplicationContext(), true);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toasty.error(getApplicationContext(), "Credentials are not Valid.", Toast.LENGTH_SHORT, true).show();
+                        }
                     } else {
-                        Toasty.error(getApplicationContext(), "Credentials are not Valid.", Toast.LENGTH_SHORT, true).show();
+
+                        Toasty.info(getApplicationContext(), "User is not active. Contact with developer.!", Toast.LENGTH_LONG, true).show();
                     }
+
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                Toasty.error(getApplicationContext(), "Request Failed!", Toast.LENGTH_SHORT, true).show();
             }
         });
+
     }
 
 
@@ -91,5 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         inputUserPassword = findViewById(R.id.inputUserPassword);
         btnLogin = findViewById(R.id.btnLogin);
         layoutLogin = findViewById(R.id.layoutLogin);
+        txtRegister = findViewById(R.id.txtRegister);
+        txtForgotPassword = findViewById(R.id.txtForgotPassword);
     }
 }

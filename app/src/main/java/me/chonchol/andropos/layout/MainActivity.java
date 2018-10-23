@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity
             Fragment profileFragment = new ProfileFragment();
             replaceFragment(profileFragment);
         } else if (id == R.id.nav_exit) {
-
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -206,5 +206,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    
 
 }

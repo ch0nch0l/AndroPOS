@@ -84,7 +84,7 @@ public interface ApiService {
 
 
     //USER
-    @GET("/api/user/{user_name}")
+    @GET("/api/userbyname/{user_name}")
     Call<User> getUserByUserName(@Path("user_name") String userName);
 
     @POST("/api/user")

@@ -40,7 +40,9 @@ public class SaleRecordActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initializeView();
+        List<QuotationList> allSaleRecords = getAllSaleRecords();
+
+        initializeView(allSaleRecords);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,26 +55,23 @@ public class SaleRecordActivity extends AppCompatActivity {
     }
 
 
-    private void initializeView(){
+    private void initializeView(List<QuotationList> quotationLists){
         progressDialog = new ProgressDialog(SaleRecordActivity.this);
         saleRecordListView = findViewById(R.id.saleRecordListView);
-
-        List<QuotationList> allRecords = getSaleRecordList();
-
-        adapter = new SaleRecordAdapter(getApplicationContext(), allRecords);
-
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
+
+        adapter = new SaleRecordAdapter(getApplicationContext(), quotationLists);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         saleRecordListView.setLayoutManager(layoutManager);
         saleRecordListView.setItemAnimator(new DefaultItemAnimator());
         saleRecordListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         saleRecordListView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
-    private List<QuotationList> getSaleRecordList() {
+
+    public List<QuotationList> getAllSaleRecords(){
         apiService = ApiClient.getClient().create(ApiService.class);
         apiService.getQuotationList().enqueue(new Callback<List<QuotationList>>() {
             @Override
@@ -81,6 +80,7 @@ public class SaleRecordActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     for (QuotationList quotationList : response.body()) {
                         quotationLists.add(quotationList);
+                        adapter.notifyDataSetChanged();
                     }
                     progressDialog.dismiss();
                 }
@@ -92,8 +92,6 @@ public class SaleRecordActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-
         return quotationLists;
     }
-
 }

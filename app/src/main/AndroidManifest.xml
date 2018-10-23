@@ -34,9 +34,7 @@
         <activity android:name=".layout.StockActivity" />
         <activity android:name=".layout.ConfirmSellActivity" />
         <activity android:name=".layout.ProfileActivity" />
-        <activity
-            android:name=".layout.LoginActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity android:name=".layout.LoginActivity"/>
         <activity android:name=".layout.CategoryListActivity" />
         <activity android:name=".layout.AddCategoryActivity" />
         <activity android:name=".layout.CategoryActivity" />

@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Transactional(readOnly = true)
     @Query(value = "SELECT * FROM USER A WHERE A.user_name = :user_name", nativeQuery = true)
-    User getUserByUserName(@Param("user_name") String name);
+    public User getUserByUserName(@Param("user_name") String name);
 }

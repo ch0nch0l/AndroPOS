@@ -8,7 +8,7 @@ public class User {
     private String userName;
     private String password;
     private Integer userRole;
-    @SerializedName("is_active")
+    @SerializedName("active")
     private Boolean isActive;
 
     public Integer getUserId() {

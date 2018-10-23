@@ -25,7 +25,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/api/user/{user_name}")
+    @GetMapping("/api/userbyname/{user_name}")
     public User getUserByUserName(@PathVariable("user_name") String name){
         return userRepository.getUserByUserName(name);
     }
