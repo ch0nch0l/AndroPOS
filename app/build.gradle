@@ -48,7 +48,8 @@ dependencies {
     implementation 'com.github.GrenderG:Toasty:1.3.0'
     //Search Dialog
     implementation 'com.github.mirrajabi:search-dialog:1.2.3'
-
+    //Circular ImageView
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
