@@ -3,6 +3,7 @@ package me.chonchol.andropos.rest;
 import java.util.List;
 
 import me.chonchol.andropos.model.Category;
+import me.chonchol.andropos.model.Client;
 import me.chonchol.andropos.model.Customer;
 import me.chonchol.andropos.model.Product;
 import me.chonchol.andropos.model.Quotation;
@@ -19,6 +20,10 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService {
+
+    //GET CLIENT
+    @GET("/api/client/{client_name}")
+    Call<Client> getClientByName(@Path("client_name") String clientName);
 
     //CATEGORY
     @GET("/api/category")

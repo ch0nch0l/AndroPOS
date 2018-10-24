@@ -154,7 +154,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void moveToLoginActivity() {
         pref.setFirstTimeLaunch(false);
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        startActivity(new Intent(getApplicationContext(), ClientLoginActivity.class));
         finish();
     }
 

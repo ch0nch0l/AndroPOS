@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.chonchol.andropos.layout.ClientLoginActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="8dp"
+    android:id="@+id/layoutClientLogin"
+    android:visibility="visible"
+    tools:context=".layout.ClientLoginActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/ic_client" />
+
+    <EditText
+        android:id="@+id/inputClientUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter URL"/>
+
+    <EditText
+        android:id="@+id/inputClientPort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Port"
+        android:maxLength="4"/>
+
+    <EditText
+        android:id="@+id/inputClientDBName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Client Name"/>
+
+    <EditText
+        android:id="@+id/inputClientPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberPassword"
+        android:hint="Secret PIN"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_key_hole"/>
+
+</LinearLayout>

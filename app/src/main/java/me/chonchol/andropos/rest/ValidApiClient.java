@@ -4,15 +4,9 @@ import me.chonchol.andropos.helper.UrlHelper;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+public class ValidApiClient {
 
-    public static String getBaseUrl() {
-        UrlHelper urlHelper = UrlHelper.getInstance();
-        return urlHelper.getFullUrl();
-    }
-
-    public static final String clientUrl = getBaseUrl();
-    public static final String BASE_URL = "http://"+clientUrl;
+    public static final String BASE_URL = "http://10.0.2.2:8080";
     public static Retrofit retrofit = null;
 
     public static Retrofit getClient(){
