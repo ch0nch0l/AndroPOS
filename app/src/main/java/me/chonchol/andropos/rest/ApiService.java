@@ -22,8 +22,8 @@ import retrofit2.http.Path;
 public interface ApiService {
 
     //GET CLIENT
-    @GET("/api/client/{client_name}")
-    Call<Client> getClientByName(@Path("client_name") String clientName);
+    @GET("/api/client/byname/{client_db}")
+    Call<Client> getClientByName(@Path("client_db") String clientName);
 
     //CATEGORY
     @GET("/api/category")
@@ -95,4 +95,6 @@ public interface ApiService {
     @POST("/api/user")
     Call<User> createNewUser(@Body User user);
 
+    @GET("api/user")
+    Call<List<User>> getAllUsers();
 }

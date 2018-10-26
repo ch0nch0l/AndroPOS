@@ -17,6 +17,7 @@ import me.chonchol.andropos.helper.EncryptorHelper;
 import me.chonchol.andropos.model.User;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +56,7 @@ public class AddUserActivity extends AppCompatActivity {
     }
 
     private void saveNewUser(User user) {
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
 
         apiService.createNewUser(user).enqueue(new Callback<User>() {
             @Override
@@ -75,7 +76,7 @@ public class AddUserActivity extends AppCompatActivity {
 
     private Boolean checkIfUserExists(User user) {
 
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
 
         apiService.getUserByUserName(user.getUserName()).enqueue(new Callback<User>() {
             @Override

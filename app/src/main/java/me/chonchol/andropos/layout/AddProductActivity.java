@@ -41,6 +41,7 @@ import me.chonchol.andropos.model.Stock;
 import me.chonchol.andropos.model.Subcategory;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -212,7 +213,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void saveProduct(Product product) {
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         apiService.saveProduct(product).enqueue(new Callback<Product>() {
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
@@ -239,7 +240,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void saveStock(Stock stock) {
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         apiService.saveStock(stock).enqueue(new Callback<Stock>() {
             @Override
             public void onResponse(Call<Stock> call, Response<Stock> response) {
@@ -257,7 +258,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void getSubcategoryListByCatId(Integer catId) {
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         Call<List<Subcategory>> getSubcategoryListByCatId = apiService.getSubcategoryListByCatId(catId);
         getSubcategoryListByCatId.enqueue(new Callback<List<Subcategory>>() {
             @Override
@@ -277,7 +278,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private List<String> getCatNameList() {
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         Call<List<Category>> getAllCategories = apiService.getAllCategories();
         getAllCategories.enqueue(new Callback<List<Category>>() {
             @Override

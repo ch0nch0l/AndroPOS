@@ -11,9 +11,11 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.helper.ViewDialog;
 import me.chonchol.andropos.model.Category;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +25,8 @@ public class AddCategoryActivity extends AppCompatActivity {
     private EditText inputCatName;
     private CheckBox chkIsCatActive;
     private Category category;
+
+    private ViewDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,8 @@ public class AddCategoryActivity extends AppCompatActivity {
                 if (catName.isEmpty()){
                     Toasty.warning(getApplicationContext(), "Category Name can't be empty!", Toast.LENGTH_SHORT, true).show();
                 } else {
-
+                    dialog = new ViewDialog(AddCategoryActivity.this);
+                    dialog.show();
                     category.setCatName(inputCatName.getText().toString());
                     category.setActive(chkIsCatActive.isChecked());
 
@@ -62,17 +67,19 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     private void saveCategory(Category category) {
 
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         apiService.saveCategory(category).enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
                 if (response.isSuccessful()){
+                    dialog.hide();
                     Toasty.success(getApplicationContext(), "Category added successfully!", Toast.LENGTH_SHORT, true).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
+                dialog.hide();
                 Toasty.error(getApplicationContext(), "Category addition failed!!!", Toast.LENGTH_SHORT, true).show();
             }
         });

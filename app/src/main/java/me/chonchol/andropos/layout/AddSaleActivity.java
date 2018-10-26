@@ -36,6 +36,7 @@ import me.chonchol.andropos.model.Sale;
 import me.chonchol.andropos.model.Stock;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -260,7 +261,7 @@ public class AddSaleActivity extends AppCompatActivity {
 
     private ArrayList<Product> getProductList() {
 
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         Call<List<Stock>> getAvailableStockList = apiService.getAvailableStockList(0);
 
         getAvailableStockList.enqueue(new Callback<List<Stock>>() {
@@ -285,7 +286,7 @@ public class AddSaleActivity extends AppCompatActivity {
 
     private void performSale() {
 
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
 
         //Insert into Customer
         apiService.createCustomer(customer).enqueue(new Callback<Customer>() {

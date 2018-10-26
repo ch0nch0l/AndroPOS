@@ -28,6 +28,7 @@ import me.chonchol.andropos.interfaces.OnRecyclerViewItemClickListener;
 import me.chonchol.andropos.model.Subcategory;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,7 +90,7 @@ public class CategoryActivity extends AppCompatActivity implements RecyclerItemT
 
         ItemTouchHelper.SimpleCallback simpleCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(subcatRecyclerView);
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         Call<List<Subcategory>> getSubcategoryListByCatId = apiService.getSubcategoryListByCatId(getIntent().getExtras().getInt("CAT_ID"));
 
         getSubcategoryListByCatId.enqueue(new Callback<List<Subcategory>>() {

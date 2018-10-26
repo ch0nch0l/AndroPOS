@@ -15,6 +15,7 @@ import me.chonchol.andropos.R;
 import me.chonchol.andropos.interfaces.OnRecyclerViewItemClickListener;
 import me.chonchol.andropos.model.Category;
 import me.chonchol.andropos.model.Subcategory;
+import me.chonchol.andropos.model.User;
 
 public class DynamicListAdapter extends RecyclerView.Adapter<DynamicListAdapter.ObjectItemViewHolder> {
 
@@ -45,6 +46,9 @@ public class DynamicListAdapter extends RecyclerView.Adapter<DynamicListAdapter.
         } else if (object instanceof Subcategory){
             Subcategory subcategory = (Subcategory) object;
             holder.catName.setText(subcategory.getSubcatName());
+        } else if (object instanceof User){
+            User user = (User) object;
+            holder.catName.setText(user.getUserName());
         }
     }
 

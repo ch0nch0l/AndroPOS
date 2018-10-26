@@ -19,10 +19,12 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.helper.ViewDialog;
 import me.chonchol.andropos.model.Category;
 import me.chonchol.andropos.model.Subcategory;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +40,7 @@ public class AddSubcategoryActivity extends AppCompatActivity {
     private Subcategory subcategory;
     private Category category;
     private ApiService apiService;
+    private ViewDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,8 @@ public class AddSubcategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_subcategory);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        dialog = new ViewDialog(AddSubcategoryActivity.this);
+        dialog.show();
         initializeView();
 
         btnAddSubcategory = (FloatingActionButton) findViewById(R.id.btnAddSubcategory);
@@ -54,6 +58,7 @@ public class AddSubcategoryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String subcatName = inputSabcatName.getText().toString();
                 if (!subcatName.isEmpty()){
+                    dialog.show();
                     subcategory.setSubcatName(subcatName);
                     subcategory.setActive(subcatIsActive.isChecked());
                     saveSubcategory(subcategory);
@@ -73,17 +78,20 @@ public class AddSubcategoryActivity extends AppCompatActivity {
 
         subcategory = new Subcategory();
 
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         apiService.getCategoryById(getIntent().getIntExtra("CAT_ID", 0)).enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
-                category = response.body();
-                subcategory.setCategory(category);
+                if (response.isSuccessful()){
+                    category = response.body();
+                    subcategory.setCategory(category);
+                    dialog.hide();
+                }
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-
+                dialog.hide();
             }
         });
     }
@@ -93,13 +101,15 @@ public class AddSubcategoryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Subcategory> call, Response<Subcategory> response) {
                 if (response.isSuccessful()){
+                    dialog.hide();
                     Toasty.success(getApplicationContext(), "Subcategory added successfully!", Toast.LENGTH_SHORT, true).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Subcategory> call, Throwable t) {
-
+                dialog.hide();
+                Toasty.error(getApplicationContext(), "Subcategory addition failed!", Toast.LENGTH_SHORT, true).show();
             }
         });
     }

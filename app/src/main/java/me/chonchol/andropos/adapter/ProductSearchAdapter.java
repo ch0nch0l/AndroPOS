@@ -2,7 +2,6 @@ package me.chonchol.andropos.adapter;
 
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.Filterable;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.chonchol.andropos.R;
 
 public class ProductSearchAdapter extends BaseAdapter implements Filterable {
 

@@ -12,14 +12,11 @@ import android.widget.Toast;
 import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.helper.EncryptorHelper;
-import me.chonchol.andropos.helper.UrlHelper;
 import me.chonchol.andropos.helper.ViewDialog;
 import me.chonchol.andropos.model.Client;
-import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
 import me.chonchol.andropos.rest.ValidApiClient;
 import me.chonchol.andropos.sharedpref.ClientSharedPreference;
-import me.chonchol.andropos.sharedpref.LoginSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,14 +51,10 @@ public class ClientLoginActivity extends AppCompatActivity {
                 viewDialog = new ViewDialog(ClientLoginActivity.this);
                 viewDialog.show();
 
-                if (isValidClient()) {
-                    UrlHelper urlHelper = new UrlHelper(clientUrl, clientPort);
-                    ClientSharedPreference.setLoggedIn(getApplicationContext(), true);
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                if (isValidClient()){
                     finish();
                 }
+
             }
         });
 
@@ -77,10 +70,9 @@ public class ClientLoginActivity extends AppCompatActivity {
 
         if (ClientSharedPreference.getLoggedInStatus(getApplicationContext())) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
-        } else {
-            layoutClientLogin.setVisibility(View.VISIBLE);
         }
     }
 
@@ -97,11 +89,16 @@ public class ClientLoginActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    if (response.body().getClientPin() == encryptedPin) {
+                    if (response.body().getClientPin().equals(encryptedPin)) {
+                        ClientSharedPreference.setLoggedIn(getApplicationContext(), true);
+                        ClientSharedPreference.setClientUrl(getApplicationContext(), "http://"+clientUrl+":"+clientPort);
                         viewDialog.hide();
                         Toasty.success(getApplicationContext(), "Welcome to AndroPOS.!", Toast.LENGTH_SHORT, true).show();
-
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     } else {
+                        viewDialog.hide();
                         Toasty.error(getApplicationContext(), "User PIN is not valid.!", Toast.LENGTH_LONG, true).show();
                     }
                 }
@@ -115,4 +112,5 @@ public class ClientLoginActivity extends AppCompatActivity {
         });
         return isValidClient;
     }
+
 }

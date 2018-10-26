@@ -43,6 +43,7 @@ import me.chonchol.andropos.adapter.StockListAdapter;
 import me.chonchol.andropos.model.Stock;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -131,7 +132,7 @@ public class StockActivity extends AppCompatActivity {
 
     //Get All Stock Information
     private List<Stock> getStockList() {
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         Call<List<Stock>> getAllStockList = apiService.getAllStockList();
         getAllStockList.enqueue(new Callback<List<Stock>>() {
             @Override
@@ -238,8 +239,9 @@ public class StockActivity extends AppCompatActivity {
                 cell.addElement(header);
                 pTable.addCell(cell);
 
-                PdfPTable table = new PdfPTable(6);
-                float[] columnWidth = new float[]{6, 30, 30, 20, 20, 30};
+                PdfPTable table = new PdfPTable(5);
+                //float[] columnWidth = new float[]{10, 30, 30, 20, 20, 30};
+                float[] columnWidth = new float[]{10, 45, 30, 25, 25};
                 table.setWidths(columnWidth);
                 cell = new PdfPCell();
                 cell.setBackgroundColor(headColor);
@@ -254,41 +256,54 @@ public class StockActivity extends AppCompatActivity {
                 cell = new PdfPCell();
                 cell.setColspan(6);
                 cell.setBackgroundColor(tableHeadColor);
-                cell = new PdfPCell(new Phrase("#"));
+                cell = new PdfPCell(new Phrase("SL"));
                 cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase("Header 1"));
+                cell = new PdfPCell(new Phrase("PRODUCT NAME"));
                 cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase("Header 2"));
+                cell = new PdfPCell(new Phrase("CATEGORY"));
                 cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase("Header 3"));
+                cell = new PdfPCell(new Phrase("PRICE"));
                 cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase("Header 4"));
+                cell = new PdfPCell(new Phrase("IN STOCk"));
                 cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cell);
-
-                cell = new PdfPCell(new Phrase("Header 5"));
-                cell.setBackgroundColor(tableHeadColor);
-                table.addCell(cell);
+//
+//                cell = new PdfPCell(new Phrase("Header 5"));
+//                cell.setBackgroundColor(tableHeadColor);
+//                table.addCell(cell);
 
                 //table.setHeaderRows(3);
                 cell = new PdfPCell();
                 cell.setColspan(6);
 
-                for (int i = 1; i <= 10; i++) {
-                    table.addCell(String.valueOf(i));
-                    table.addCell("Header 1 row " + i);
-                    table.addCell("Header 2 row " + i);
-                    table.addCell("Header 3 row " + i);
-                    table.addCell("Header 4 row " + i);
-                    table.addCell("Header 5 row " + i);
+//                for (int i = 1; i <= 10; i++) {
+//                    table.addCell(String.valueOf(i));
+//                    table.addCell("Header 1 row " + i);
+//                    table.addCell("Header 2 row " + i);
+//                    table.addCell("Header 3 row " + i);
+//                    table.addCell("Header 4 row " + i);
+//                    table.addCell("Header 5 row " + i);
+//                }
+
+                for (int i = 0; i<stockList.size(); i++){
+                    table.addCell(String.valueOf(i+1));
+                    table.addCell(stockList.get(i).getProduct().getProductName());
+                    table.addCell(stockList.get(i).getProduct().getSubcategory().getCategory().getCatName());
+                    table.addCell(stockList.get(i).getProduct().getPrice().toString());
+                    table.addCell(stockList.get(i).getQuantity().toString());
 
                 }
 
@@ -299,7 +314,7 @@ public class StockActivity extends AppCompatActivity {
                 cell = new PdfPCell();
                 cell.setColspan(6);
                 cell.setBackgroundColor(tableHeadColor);
-                cell = new PdfPCell(new Phrase("Total Nunber"));
+                cell = new PdfPCell(new Phrase("Total Number"));
                 cell.setBorder(Rectangle.NO_BORDER);
                 cell.setBackgroundColor(tableHeadColor);
                 ftable.addCell(cell);

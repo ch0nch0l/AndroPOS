@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 public class ClientSharedPreference {
 
     public static final String IS_CLIENT_LOGGED_IN = "client_logged_in";
+    public static final String CLIENT_URL = "http://ip:port";
 
     static SharedPreferences getClientSharedPref(Context context){
         return PreferenceManager.getDefaultSharedPreferences(context);
@@ -22,8 +23,18 @@ public class ClientSharedPreference {
         editor.apply();
     }
 
+    public static void setClientUrl(Context context, String clientDBName){
+        SharedPreferences.Editor editor = getClientSharedPref(context).edit();
+        editor.putString(CLIENT_URL, clientDBName);
+        editor.apply();
+    }
+
     public static boolean getLoggedInStatus(Context context){
         return getClientSharedPref(context).getBoolean(IS_CLIENT_LOGGED_IN, false);
+    }
+
+    public static String getClientUrl(Context context){
+        return getClientSharedPref(context).getString(CLIENT_URL, "default_db_name");
     }
 
 }

@@ -21,6 +21,7 @@ import me.chonchol.andropos.adapter.SaleRecordAdapter;
 import me.chonchol.andropos.model.QuotationList;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,7 +73,7 @@ public class SaleRecordActivity extends AppCompatActivity {
 
 
     public List<QuotationList> getAllSaleRecords(){
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         apiService.getQuotationList().enqueue(new Callback<List<QuotationList>>() {
             @Override
             public void onResponse(Call<List<QuotationList>> call, Response<List<QuotationList>> response) {

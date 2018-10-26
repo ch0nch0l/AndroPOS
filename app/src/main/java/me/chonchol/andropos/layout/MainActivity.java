@@ -89,6 +89,13 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
 
+        for (Fragment fragment:getSupportFragmentManager().getFragments()) {
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
+        navigationView.setCheckedItem(R.id.nav_home);
+        Fragment homeFragment = new HomeFragment();
+        replaceFragment(homeFragment);
     }
 
     @Override
@@ -161,7 +168,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager manager = this.getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment_layout, fragment);
-        //transaction.addToBackStack(null);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -206,7 +213,4 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-    
-
 }

@@ -16,6 +16,7 @@ import me.chonchol.andropos.helper.EncryptorHelper;
 import me.chonchol.andropos.model.User;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
+import me.chonchol.andropos.sharedpref.ClientSharedPreference;
 import me.chonchol.andropos.sharedpref.LoginSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,14 +63,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddUserActivity.class);
                 startActivity(intent);
-
             }
         });
 
     }
 
     private void userLogin(String userName, String userPassword) {
-        apiService = ApiClient.getClient().create(ApiService.class);
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
         apiService.getUserByUserName(userName).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

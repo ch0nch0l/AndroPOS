@@ -1,6 +1,5 @@
 package me.chonchol.andropos.rest;
 
-import me.chonchol.andropos.helper.UrlHelper;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
