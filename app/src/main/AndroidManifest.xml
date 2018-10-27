@@ -17,8 +17,7 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".layout.SplashActivity">
+        <activity android:name=".layout.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,13 +27,12 @@
         <activity
             android:name=".layout.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".layout.AddProductActivity" />
         <activity android:name=".layout.StockActivity" />
         <activity android:name=".layout.ConfirmSellActivity" />
         <activity android:name=".layout.ProfileActivity" />
-        <activity android:name=".layout.LoginActivity"/>
+        <activity android:name=".layout.LoginActivity" />
         <activity android:name=".layout.CategoryListActivity" />
         <activity android:name=".layout.AddCategoryActivity" />
         <activity android:name=".layout.CategoryActivity" />
@@ -44,6 +42,10 @@
         <activity android:name=".layout.AddUserActivity" />
         <activity android:name=".layout.UserListActivity" />
         <activity android:name=".layout.ClientLoginActivity" />
+        <activity
+            android:name=".layout.FilterReportActivity"
+            android:label="@string/title_activity_filter_report"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
