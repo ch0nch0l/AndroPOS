@@ -13,23 +13,25 @@
         android:id="@+id/btnStockAlertReport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
         android:layout_margin="8dp"
+        android:background="@color/colorPrimaryDark"
         android:text="Stock Alert Report"
-        android:textSize="18dp"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:textSize="18dp" />
 
     <Button
         android:id="@+id/btnReportByProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
         android:layout_margin="8dp"
+        android:background="@color/colorPrimaryDark"
         android:text="By Product"
-        android:textSize="18dp"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:textSize="18dp" />
 
-    <LinearLayout
+
+    <RadioGroup
+        android:id="@+id/radGrpReportType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -40,29 +42,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:text="Weekly"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Weekly"/>
+            android:textSize="20dp" />
 
         <RadioButton
             android:id="@+id/radioMonthly"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:text="Monthly"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Monthly"/>
+            android:textSize="20dp" />
 
         <RadioButton
             android:id="@+id/radioCustom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:text="Custom"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Custom"/>
+            android:textSize="20dp" />
+    </RadioGroup>
 
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutDateRange"
@@ -74,13 +76,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="From Date"/>
+                android:text="From Date"
+                android:textColor="@color/colorPrimaryDark" />
 
             <EditText
                 android:id="@+id/inputFromDate"
@@ -92,13 +95,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="To Date"/>
+                android:text="To Date"
+                android:textColor="@color/colorPrimaryDark" />
 
             <EditText
                 android:id="@+id/inputToDate"

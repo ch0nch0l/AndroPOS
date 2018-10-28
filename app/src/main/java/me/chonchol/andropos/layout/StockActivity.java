@@ -370,10 +370,8 @@ public class StockActivity extends AppCompatActivity {
 
     //Check READ/WRITE PERMISSION
     private boolean checkPermission() {
-
         return ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                ;
+                && ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
     }
 
     //Request for Permission

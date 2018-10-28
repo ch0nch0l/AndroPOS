@@ -67,6 +67,9 @@ public interface ApiService {
     @PUT("/api/stock/{product_id}/{quantity}")
     Call<Stock> updateStockByProductId(@Path("product_id") Integer id, @Path("quantity") Integer quantity);
 
+    @GET("/api/stock/{from_date}/{to_date}")
+    Call<List<Stock>> getStockListByDate(@Path("from_date") String fromDate, @Path("to_date") String toDate);
+
     //CUSTOMER
     @POST("/api/customer")
     Call<Customer> createCustomer(@Body Customer customer);
@@ -86,6 +89,9 @@ public interface ApiService {
     //SALE
     @POST("/api/sale")
     Call<Sale> createSale(@Body Sale sale);
+
+    @GET("/api/sale/{from_date}/{to_date}")
+    Call<List<Sale>> getSaleListByDate(@Path("from_date") String fromDate, @Path("to_date") String toDate);
 
 
     //USER
