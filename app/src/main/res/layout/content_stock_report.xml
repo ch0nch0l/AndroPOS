@@ -6,63 +6,67 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".layout.FilterReportActivity"
-    tools:showIn="@layout/activity_filter_report">
-
-    <Button
-        android:id="@+id/btnStockAlertReport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="Stock Alert Report"
-        android:textColor="#ffffff"
-        android:textSize="18dp" />
-
-    <Button
-        android:id="@+id/btnReportByProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="By Product"
-        android:textColor="#ffffff"
-        android:textSize="18dp" />
-
+    tools:context=".layout.StockReportActivity"
+    tools:showIn="@layout/activity_stock_report">
 
     <RadioGroup
         android:id="@+id/radGrpReportType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="horizontal">
+        android:layout_margin="4dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioStockAlert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="STOCK ALERT REPORT"
+            android:layout_margin="4dp"
+            android:background="@color/colorFade"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18dp" />
+
+        <RadioButton
+            android:visibility="gone"
+            android:id="@+id/radioProductWise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PRODUCT WISE REPORT"
+            android:layout_margin="4dp"
+            android:background="@color/colorFade"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18dp" />
 
         <RadioButton
             android:id="@+id/radioWeekly"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Weekly"
+            android:text="WEEKLY REPORT"
+            android:layout_margin="4dp"
+            android:background="@color/colorFade"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <RadioButton
             android:id="@+id/radioMonthly"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Monthly"
+            android:text="MONTHLY REPORT"
+            android:layout_margin="4dp"
+            android:background="@color/colorFade"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <RadioButton
             android:id="@+id/radioCustom"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Custom"
+            android:text="CUSTOM REPORT"
+            android:layout_margin="4dp"
+            android:background="@color/colorFade"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
+
     </RadioGroup>
 
 
@@ -70,6 +74,7 @@
         android:id="@+id/layoutDateRange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_margin="8dp"
         android:orientation="horizontal">
 
@@ -88,6 +93,7 @@
             <EditText
                 android:id="@+id/inputFromDate"
                 android:layout_width="match_parent"
+                android:focusable="false"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -106,11 +112,10 @@
 
             <EditText
                 android:id="@+id/inputToDate"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-
     </LinearLayout>
-
 </LinearLayout>

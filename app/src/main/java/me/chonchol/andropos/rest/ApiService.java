@@ -64,6 +64,9 @@ public interface ApiService {
     @GET("/api/stock/available/{quantity}")
     Call<List<Stock>> getAvailableStockList(@Path("quantity") Integer quantity);
 
+    @GET("/api/stock/alert/{quantity}")
+    Call<List<Stock>> getStockAlertStockList(@Path("quantity") Integer quantity);
+
     @PUT("/api/stock/{product_id}/{quantity}")
     Call<Stock> updateStockByProductId(@Path("product_id") Integer id, @Path("quantity") Integer quantity);
 

@@ -48,6 +48,13 @@ public class StockController extends BaseController{
         return stockRepository.getAvailableStockList(quantity);
     }
 
+    @GetMapping("/api/stock/alert/{quantity}")
+    public List<Stock> getStockAlertStockList(@PathVariable("quantity") Integer quantity){
+        return stockRepository.getStockAlertStockList(quantity);
+    }
+
+
+
     @Transactional
     @ResponseBody
     @PutMapping("/api/stock/{product_id}/{quantity}")

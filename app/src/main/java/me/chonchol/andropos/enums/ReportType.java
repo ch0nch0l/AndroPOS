@@ -2,9 +2,11 @@ package me.chonchol.andropos.enums;
 
 public enum ReportType {
 
-    STOCK_REPORT(1),
-    SALE_REPORT(2),
-    PROFIT_REPORT(3);
+    STOCK_ALERT_REPORT(1),
+    PRODUCT_WISE_REPORT(2),
+    WEEKLY_REPORT(3),
+    MONTHLY_REPORT(4),
+    CUSTOM_REPORT(5);
 
 
     private final int value;

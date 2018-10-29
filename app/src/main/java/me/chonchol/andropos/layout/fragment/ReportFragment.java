@@ -9,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import me.chonchol.andropos.R;
-import me.chonchol.andropos.enums.ReportType;
-import me.chonchol.andropos.layout.FilterReportActivity;
+import me.chonchol.andropos.layout.StockReportActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +24,7 @@ import me.chonchol.andropos.layout.FilterReportActivity;
 public class ReportFragment extends Fragment {
 
     private ImageButton btnStockReport, btnSaleReport, btnProfitReport;
+    Bundle bundle = new Bundle();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,8 +86,7 @@ public class ReportFragment extends Fragment {
         btnStockReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FilterReportActivity.class);
-                intent.putExtra("STOCK_REPORT", ReportType.STOCK_REPORT);
+                Intent intent = new Intent(getContext(), StockReportActivity.class);
                 startActivity(intent);
             }
         });
@@ -96,8 +94,7 @@ public class ReportFragment extends Fragment {
         btnSaleReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FilterReportActivity.class);
-                intent.putExtra("SALE_REPORT", ReportType.SALE_REPORT);
+                Intent intent = new Intent(getContext(), StockReportActivity.class);
                 startActivity(intent);
             }
         });
@@ -105,8 +102,7 @@ public class ReportFragment extends Fragment {
         btnProfitReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FilterReportActivity.class);
-                intent.putExtra("PROFIT_REPORT", ReportType.PROFIT_REPORT);
+                Intent intent = new Intent(getContext(), StockReportActivity.class);
                 startActivity(intent);
             }
         });

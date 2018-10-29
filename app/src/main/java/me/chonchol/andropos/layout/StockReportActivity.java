@@ -3,11 +3,9 @@ package me.chonchol.andropos.layout;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -34,25 +32,22 @@ import me.chonchol.andropos.report.ReportGenerator;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
 import me.chonchol.andropos.sharedpref.ClientSharedPreference;
-import me.chonchol.andropos.sharedpref.LoginSharedPreference;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FilterReportActivity extends AppCompatActivity {
+public class StockReportActivity extends AppCompatActivity {
 
-    private Button btnStockAlertReport, btnReportByProduct;
     private RadioGroup radGrpReportType;
-    private RadioButton radioWeekly, radioMonthly, radioCustom;
+    private RadioButton radioStockAlert, radioProductWise, radioWeekly, radioMonthly, radioCustom;
     private LinearLayout layoutDateRange;
     private EditText inputFromDate, inputToDate;
     private FloatingActionButton btnGenerateReport;
-    private DatePickerDialog.OnDateSetListener date;
     private int reportType;
     private ViewDialog viewDialog;
 
     private String fromDate, toDate;
-    private Calendar calendar;
+    private Calendar calendar = Calendar.getInstance();
     private Date currentTime = Calendar.getInstance().getTime();
     private DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
 
@@ -62,7 +57,7 @@ public class FilterReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_report);
+        setContentView(R.layout.activity_stock_report);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -72,55 +67,41 @@ public class FilterReportActivity extends AppCompatActivity {
         btnGenerateReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewDialog = new ViewDialog(FilterReportActivity.this);
+                viewDialog = new ViewDialog(StockReportActivity.this);
                 viewDialog.show();
-                if (reportType == ReportType.STOCK_REPORT.getValue()){
-                    generateStockReport(fromDate, toDate);
-                } else if (reportType == ReportType.SALE_REPORT.getValue()){
-                    generateSaleReport(fromDate, toDate);
 
-                } else if (reportType == ReportType.PROFIT_REPORT.getValue()){
-                    generateProfitReport(fromDate, toDate);
+                switch (reportType) {
+                    case 1:
+                        generateStockAlertReport();
+                        break;
+                    case 2:
+                        generateProductWiseReport();
+                        break;
+                    case 3:
+                        generateStockReportByDate(fromDate, toDate);
+                        break;
+                    case 4:
+                        generateStockReportByDate(fromDate, toDate);
+                        break;
+                    case 5:
+                        generateStockReportByDate(fromDate, toDate);
+                        break;
+                    default:
+                        break;
                 }
             }
         });
     }
 
-    private void generateProfitReport(String fromDate, String toDate) {
+    private void generateProductWiseReport() {
 
     }
 
-    private void generateSaleReport(String fromDate, String toDate) {
-        List<Sale> saleList = new ArrayList<>();
-        List<QuotationList> quotationLists = new ArrayList<>();
-
-        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
-        apiService.getSaleListByDate(fromDate, toDate).enqueue(new Callback<List<Sale>>() {
-            @Override
-            public void onResponse(Call<List<Sale>> call, Response<List<Sale>> response) {
-                if (response.isSuccessful()){
-                    for (Sale sale: response.body()){
-                        saleList.add(sale);
-                    }
-                    reportGenerator.generateSaleReport(getApplicationContext(), saleList);
-                    viewDialog.hide();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Sale>> call, Throwable t) {
-                viewDialog.hide();
-                Toasty.error(getApplicationContext(), "Sale report generation failed.!", Toast.LENGTH_SHORT, true).show();
-            }
-        });
-    }
-
-    private void generateStockReport(String fromDate, String toDate) {
-
+    private void generateStockAlertReport() {
         List<Stock> stockList = new ArrayList<>();
 
         apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
-        apiService.getStockListByDate(fromDate, toDate).enqueue(new Callback<List<Stock>>() {
+        apiService.getStockAlertStockList(5).enqueue(new Callback<List<Stock>>() {
             @Override
             public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
                 if (response.isSuccessful()){
@@ -140,10 +121,35 @@ public class FilterReportActivity extends AppCompatActivity {
         });
     }
 
+    private void generateStockReportByDate(String fromDate, String toDate) {
+
+        List<Stock> stockList = new ArrayList<>();
+
+        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
+        apiService.getStockListByDate(fromDate, toDate).enqueue(new Callback<List<Stock>>() {
+            @Override
+            public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
+                if (response.isSuccessful()) {
+                    for (Stock stock : response.body()) {
+                        stockList.add(stock);
+                    }
+                    reportGenerator.generateStockReport(getApplicationContext(), stockList);
+                    viewDialog.hide();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Stock>> call, Throwable t) {
+                viewDialog.hide();
+                Toasty.error(getApplicationContext(), "Stock report generation failed.!", Toast.LENGTH_SHORT, true).show();
+            }
+        });
+    }
+
     private void initializeView() {
-        btnStockAlertReport = findViewById(R.id.btnStockAlertReport);
-        btnReportByProduct = findViewById(R.id.btnReportByProduct);
         radGrpReportType = findViewById(R.id.radGrpReportType);
+        radioStockAlert = findViewById(R.id.radioStockAlert);
+        radioProductWise = findViewById(R.id.radioProductWise);
         radioWeekly = findViewById(R.id.radioWeekly);
         radioMonthly = findViewById(R.id.radioMonthly);
         radioCustom = findViewById(R.id.radioCustom);
@@ -151,44 +157,64 @@ public class FilterReportActivity extends AppCompatActivity {
         inputFromDate = findViewById(R.id.inputFromDate);
         inputToDate = findViewById(R.id.inputToDate);
 
-        if (getIntent().getIntArrayExtra("STOCK_REPORT").equals(ReportType.STOCK_REPORT.getValue())) {
-            reportType = ReportType.STOCK_REPORT.getValue();
-            btnStockAlertReport.setVisibility(View.VISIBLE);
-        } else if (getIntent().getIntArrayExtra("SALE_REPORT").equals(ReportType.SALE_REPORT.getValue())) {
-            reportType = ReportType.SALE_REPORT.getValue();
-            btnStockAlertReport.setVisibility(View.GONE);
-        } else if (getIntent().getIntArrayExtra("PROFIT_REPORT").equals(ReportType.PROFIT_REPORT.getValue())) {
-            reportType = ReportType.PROFIT_REPORT.getValue();
-            btnStockAlertReport.setVisibility(View.GONE);
-        }
+        DatePickerDialog.OnDateSetListener fromDatePicker = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                inputFromDate.setText(format.format(calendar.getTime()));
+
+            }
+        };
+
+        DatePickerDialog.OnDateSetListener toDatePicker = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                inputToDate.setText(format.format(calendar.getTime()));
+
+            }
+        };
 
         radGrpReportType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.radioWeekly) {
+                if (i == R.id.radioStockAlert) {
                     layoutDateRange.setVisibility(View.GONE);
+                    reportType = ReportType.STOCK_ALERT_REPORT.getValue();
+                } else if (i == R.id.radioProductWise) {
+                    layoutDateRange.setVisibility(View.GONE);
+                    reportType = ReportType.PRODUCT_WISE_REPORT.getValue();
+                } else if (i == R.id.radioWeekly) {
+                    layoutDateRange.setVisibility(View.GONE);
+                    reportType = ReportType.WEEKLY_REPORT.getValue();
                     fromDate = format.format(addDays(currentTime, 7));
                     toDate = format.format(currentTime);
                 } else if (i == R.id.radioMonthly) {
                     layoutDateRange.setVisibility(View.GONE);
+                    reportType = ReportType.MONTHLY_REPORT.getValue();
                     fromDate = format.format(addDays(currentTime, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)));
                     toDate = format.format(currentTime);
                 } else if (i == R.id.radioCustom) {
                     layoutDateRange.setVisibility(View.VISIBLE);
+                    reportType = ReportType.CUSTOM_REPORT.getValue();
 
                     inputFromDate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            setFromDate();
-                            fromDate = inputFromDate.getText().toString();
+                            new DatePickerDialog(StockReportActivity.this, fromDatePicker, calendar.get(Calendar.YEAR),
+                                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
                         }
                     });
 
                     inputToDate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            setToDate();
-                            toDate = inputToDate.getText().toString();
+                            new DatePickerDialog(StockReportActivity.this, toDatePicker, calendar.get(Calendar.YEAR),
+                                    calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
                         }
                     });
                 }
@@ -205,27 +231,5 @@ public class FilterReportActivity extends AppCompatActivity {
         return calendar.getTime();
     }
 
-    public void setFromDate(){
-        date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                inputFromDate.setText(format.format(calendar.getTime()));
-            }
-        };
-    }
 
-    public void setToDate(){
-        date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                inputToDate.setText(calendar.getTime().toString());
-            }
-        };
-    }
 }
