@@ -4,6 +4,7 @@ package me.chonchol.androposweb.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -22,6 +23,8 @@ public class Stock {
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    private Date date;
 
     public Integer getStockId() {
         return stockId;
@@ -45,5 +48,13 @@ public class Stock {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

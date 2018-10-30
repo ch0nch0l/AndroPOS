@@ -12,6 +12,8 @@ import me.chonchol.andropos.model.Sale;
 import me.chonchol.andropos.model.Stock;
 import me.chonchol.andropos.model.Subcategory;
 import me.chonchol.andropos.model.User;
+import me.chonchol.andropos.model.report.ProfitReport;
+import me.chonchol.andropos.model.report.SaleReport;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -64,14 +66,8 @@ public interface ApiService {
     @GET("/api/stock/available/{quantity}")
     Call<List<Stock>> getAvailableStockList(@Path("quantity") Integer quantity);
 
-    @GET("/api/stock/alert/{quantity}")
-    Call<List<Stock>> getStockAlertStockList(@Path("quantity") Integer quantity);
-
     @PUT("/api/stock/{product_id}/{quantity}")
     Call<Stock> updateStockByProductId(@Path("product_id") Integer id, @Path("quantity") Integer quantity);
-
-    @GET("/api/stock/{from_date}/{to_date}")
-    Call<List<Stock>> getStockListByDate(@Path("from_date") String fromDate, @Path("to_date") String toDate);
 
     //CUSTOMER
     @POST("/api/customer")
@@ -93,10 +89,6 @@ public interface ApiService {
     @POST("/api/sale")
     Call<Sale> createSale(@Body Sale sale);
 
-    @GET("/api/sale/{from_date}/{to_date}")
-    Call<List<Sale>> getSaleListByDate(@Path("from_date") String fromDate, @Path("to_date") String toDate);
-
-
     //USER
     @GET("/api/userbyname/{user_name}")
     Call<User> getUserByUserName(@Path("user_name") String userName);
@@ -106,4 +98,17 @@ public interface ApiService {
 
     @GET("api/user")
     Call<List<User>> getAllUsers();
+
+    //REPORT
+    @GET("/api/report/stock/{quantity}")
+    Call<List<Stock>> getStockAlertStockList(@Path("quantity") Integer quantity);
+
+    @GET("/api/report/stock/{from_date}/{to_date}")
+    Call<List<Stock>> getStockReportByDate(@Path("from_date") String fromDate, @Path("to_date") String toDate);
+
+    @GET("api/report/sale/{from_date}/{to_date}")
+    Call<List<SaleReport>> getSaleReportBydate(@Path("from_date")String fromDate, @Path("to_date") String toDate);
+
+    @GET("api/report/profit/{from_date}/{to_date}")
+    Call<List<ProfitReport>> getProfitReportByDate(@Path("from_date")String fromDate, @Path("to_date") String toDate);
 }

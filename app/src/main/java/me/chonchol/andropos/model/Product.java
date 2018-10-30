@@ -12,6 +12,7 @@ public class Product implements Searchable{
     private String Image;
     private String code;
     private Subcategory subcategory;
+    private Double cost;
     private Double price;
     @SerializedName("active")
     private Boolean isActive;
@@ -69,6 +70,14 @@ public class Product implements Searchable{
 
     public void setSubcategory(Subcategory subcategory) {
         this.subcategory = subcategory;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Double getPrice() {

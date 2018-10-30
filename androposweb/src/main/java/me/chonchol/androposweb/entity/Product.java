@@ -30,6 +30,9 @@ public class Product {
     @JoinColumn(name = "subcat_id")
     private Subcategory subcategory;
 
+    @Column(name = "cost")
+    private Double cost;
+
     @Column(name = "price")
     private Double price;
 
@@ -82,6 +85,14 @@ public class Product {
 
     public void setSubcategory(Subcategory subcategory) {
         this.subcategory = subcategory;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Double getPrice() {

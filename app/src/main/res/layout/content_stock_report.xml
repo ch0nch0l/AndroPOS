@@ -7,7 +7,7 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".layout.StockReportActivity"
-    tools:showIn="@layout/activity_stock_report">
+    tools:showIn="@layout/activity_report_layout">
 
     <RadioGroup
         android:id="@+id/radGrpReportType"
@@ -17,6 +17,7 @@
         android:orientation="vertical">
 
         <RadioButton
+            android:visibility="gone"
             android:id="@+id/radioStockAlert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

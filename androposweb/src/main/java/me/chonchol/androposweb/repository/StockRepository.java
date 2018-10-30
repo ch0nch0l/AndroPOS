@@ -21,4 +21,7 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
     @Modifying
     @Query(value = "UPDATE STOCK A SET A.quantity = A.quantity - :quantity WHERE A.product_id = :product_id", nativeQuery = true)
     void updateStockByProductId(@Param("product_id") Integer productId, @Param("quantity") Integer quantity);
+
+    @Query(value = "SELECT * FROM STOCK A WHERE A.date BETWEEN :from_date AND :to_date", nativeQuery = true)
+    List<Stock> getStockReportByDate(@Param("from_date") String fromDate, @Param("to_date") String toDate);
 }

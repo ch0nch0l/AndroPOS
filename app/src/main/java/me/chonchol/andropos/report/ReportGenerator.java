@@ -36,6 +36,8 @@ import me.chonchol.andropos.R;
 import me.chonchol.andropos.layout.StockActivity;
 import me.chonchol.andropos.model.Sale;
 import me.chonchol.andropos.model.Stock;
+import me.chonchol.andropos.model.report.ProfitReport;
+import me.chonchol.andropos.model.report.SaleReport;
 
 /**
  * Created by mehedi.chonchol on 28-Oct-18.
@@ -248,7 +250,7 @@ public class ReportGenerator {
         }
     }
 
-    public void generateSaleReport(Context context, List<Sale> saleList){
+    public void generateSaleReport(Context context, List<SaleReport> saleReportList){
         Document document = new Document();
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss a");
@@ -334,7 +336,7 @@ public class ReportGenerator {
                 cell = new PdfPCell();
                 cell.setColspan(6);
                 cell.setBackgroundColor(tableHeadColor);
-                cell = new PdfPCell(new Phrase("SL"));
+                cell = new PdfPCell(new Phrase("DATE"));
                 cell.setBackgroundColor(tableHeadColor);
                 cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
                 table.addCell(cell);
@@ -368,15 +370,198 @@ public class ReportGenerator {
                 cell = new PdfPCell();
                 cell.setColspan(6);
 
-                for (int i = 0; i<saleList.size(); i++){
+                for (int i = 0; i<saleReportList.size(); i++){
+                    table.addCell(saleReportList.get(i).getDate().toString());
+                    table.addCell(saleReportList.get(i).getCustomerName());
+                    table.addCell(saleReportList.get(i).getPhoneNo());
+                    table.addCell(saleReportList.get(i).getProductName());
+                    table.addCell(saleReportList.get(i).getQuantity().toString());
+                    table.addCell(saleReportList.get(i).getTotalAmount().toString());
+                }
+
+                PdfPTable ftable = new PdfPTable(6);
+                ftable.setWidthPercentage(100);
+                float[] columnWidthaa = new float[]{30, 10, 30, 10, 30, 10};
+                ftable.setWidths(columnWidthaa);
+                cell = new PdfPCell();
+                cell.setColspan(6);
+                cell.setBackgroundColor(tableHeadColor);
+                cell = new PdfPCell(new Phrase("Total Number"));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setBackgroundColor(tableHeadColor);
+                ftable.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(""));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setBackgroundColor(tableHeadColor);
+                ftable.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(""));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setBackgroundColor(tableHeadColor);
+                ftable.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(""));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setBackgroundColor(tableHeadColor);
+                ftable.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(""));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setBackgroundColor(tableHeadColor);
+                ftable.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(""));
+                cell.setBorder(Rectangle.NO_BORDER);
+                cell.setBackgroundColor(tableHeadColor);
+                ftable.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Footer"));
+                cell.setColspan(6);
+                ftable.addCell(cell);
+
+                cell = new PdfPCell();
+                cell.setColspan(6);
+                cell.addElement(ftable);
+                table.addCell(cell);
+
+                document.add(table);
+
+                Toasty.success(context, "Stock Report STOCK_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf generated at DOWNLOADS folder", Toast.LENGTH_SHORT, true).show();
+            } catch (DocumentException de) {
+                Log.e("PDFCreator", "DocumentException:" + de);
+            } catch (IOException e) {
+                Log.e("PDFCreator", "ioException:" + e);
+            } finally {
+                document.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generateProfitReport(Context context, List<ProfitReport> profitReportList){
+        Document document = new Document();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss a");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
+            FileOutputStream outputStream = new FileOutputStream(
+                    new File(Environment.getExternalStorageDirectory() + "/AndroPOS/Reports/Sale"
+                            , "SALE_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf"
+                    ));
+
+            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+
+            //Open the document
+            document.open();
+
+            document.setPageSize(PageSize.A4);
+            document.addCreationDate();
+            document.addAuthor("Andro POS");
+            document.addCreator("http://chonchol.me");
+
+            //Create Header table
+            PdfPTable header = new PdfPTable(3);
+            header.setWidthPercentage(100);
+            float[] fl = new float[]{20, 45, 35};
+            header.setWidths(fl);
+            cell = new PdfPCell();
+            cell.setBorder(Rectangle.NO_BORDER);
+
+            //Set Logo in Header Cell
+            Drawable logo = context.getResources().getDrawable(R.drawable.ic_point);
+            Bitmap bitmap = ((BitmapDrawable) logo).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] bitmapLogo = stream.toByteArray();
+            try {
+                imgReportLogo = Image.getInstance(bitmapLogo);
+                imgReportLogo.setAbsolutePosition(330f, 642f);
+
+                cell.addElement(imgReportLogo);
+                header.addCell(cell);
+
+                cell = new PdfPCell();
+                cell.setBorder(Rectangle.NO_BORDER);
+
+                // Heading
+                //BaseFont font = BaseFont.createFont("assets/fonts/brandon_medium.otf", "UTF-8", BaseFont.EMBEDDED);
+                Font titleFont = new Font(Font.FontFamily.COURIER, 22.0f, Font.BOLD, BaseColor.BLACK);
+
+                //Creating Chunk
+                Chunk titleChunk = new Chunk("Andro POS", titleFont);
+                //Paragraph
+                Paragraph titleParagraph = new Paragraph(titleChunk);
+
+                cell.addElement(titleParagraph);
+                cell.addElement(new Paragraph("Profit Report"));
+                cell.addElement(new Paragraph("Date: " + format.format(Calendar.getInstance().getTime())));
+                header.addCell(cell);
+
+                cell = new PdfPCell(new Paragraph(""));
+                cell.setBorder(Rectangle.NO_BORDER);
+                header.addCell(cell);
+
+                PdfPTable pTable = new PdfPTable(1);
+                pTable.setWidthPercentage(100);
+                cell = new PdfPCell();
+                cell.setColspan(1);
+                cell.addElement(header);
+                pTable.addCell(cell);
+
+                PdfPTable table = new PdfPTable(5);
+                //float[] columnWidth = new float[]{10, 30, 20, 30, 20, 30};
+                float[] columnWidth = new float[]{10, 45, 30, 25, 25};
+                table.setWidths(columnWidth);
+                cell = new PdfPCell();
+                cell.setBackgroundColor(headColor);
+                cell.setColspan(6);
+                cell.addElement(pTable);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase(" "));
+                cell.setColspan(6);
+                table.addCell(cell);
+
+                cell = new PdfPCell();
+                cell.setColspan(6);
+                cell.setBackgroundColor(tableHeadColor);
+                cell = new PdfPCell(new Phrase("SL"));
+                cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase("DATE"));
+                cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase("TOTAL SALE"));
+                cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase("TOTAL COST"));
+                cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(cell);
+
+                cell = new PdfPCell(new Phrase("PROFIT"));
+                cell.setBackgroundColor(tableHeadColor);
+                cell.setVerticalAlignment(PdfPCell.ALIGN_CENTER);
+                table.addCell(cell);
+
+                //table.setHeaderRows(3);
+                cell = new PdfPCell();
+                cell.setColspan(6);
+
+                for (int i = 0; i<profitReportList.size(); i++){
                     table.addCell(String.valueOf(i+1));
-                    table.addCell(saleList.get(i).getQuotation().getCustomer().getCustomerName());
-                    table.addCell(saleList.get(i).getQuotation().getCustomer().getPhoneNo());
-                    //table.addCell(saleList.get(i).getQuotation());
-//                    table.addCell(stockList.get(i).getProduct().getProductName());
-//                    table.addCell(stockList.get(i).getProduct().getSubcategory().getCategory().getCatName());
-//                    table.addCell(stockList.get(i).getProduct().getPrice().toString());
-//                    table.addCell(stockList.get(i).getQuantity().toString());
+                    table.addCell(profitReportList.get(i).getDate().toString());
+                    table.addCell(profitReportList.get(i).getTotalSaleAmount().toString());
+                    table.addCell(profitReportList.get(i).getTotalCostAmount().toString());
+                    table.addCell(String.valueOf(profitReportList.get(i).getTotalSaleAmount()
+                            - profitReportList.get(i).getTotalCostAmount()));
 
                 }
 

@@ -1,6 +1,8 @@
 package me.chonchol.androposweb.controller;
 
 import me.chonchol.androposweb.entity.Sale;
+import me.chonchol.androposweb.entity.report.ProfitReport;
+import me.chonchol.androposweb.entity.report.SaleReport;
 import me.chonchol.androposweb.repository.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +39,20 @@ public class SaleController {
         return saleRepository.save(newSale);
     }
 
+    @GetMapping("api/report/sale/{from_date}/{to_date}")
+    public List<SaleReport> getSaleReportBydate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
+        return saleRepository.getSaleReportBydate(fromDate, toDate);
+    }
+
+    @GetMapping("api/report/profit/{from_date}/{to_date}")
+    public List<ProfitReport> getProfitReportByDate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
+        return saleRepository.getProfitReportByDate(fromDate, toDate);
+    }
+
     @DeleteMapping("/api/sale/{sale_id}")
     public Boolean delete(@PathVariable("sale_id") Integer id){
         saleRepository.deleteById(id);
         return true;
     }
+
 }

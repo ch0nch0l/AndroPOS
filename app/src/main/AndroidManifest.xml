@@ -27,7 +27,7 @@
         <activity
             android:name=".layout.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".layout.AddProductActivity" />
         <activity android:name=".layout.StockActivity" />
         <activity android:name=".layout.ConfirmSellActivity" />
@@ -45,6 +45,14 @@
         <activity
             android:name=".layout.StockReportActivity"
             android:label="@string/title_activity_filter_report"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".layout.SaleReportActivity"
+            android:label="@string/title_activity_sale_report"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".layout.ProfitReportActivity"
+            android:label="@string/title_activity_profit_report"
             android:theme="@style/AppTheme"></activity>
     </application>
 

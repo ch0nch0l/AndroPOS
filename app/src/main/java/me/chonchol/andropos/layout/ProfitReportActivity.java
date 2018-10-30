@@ -3,6 +3,7 @@ package me.chonchol.andropos.layout;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -25,7 +26,7 @@ import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.enums.ReportType;
 import me.chonchol.andropos.helper.ViewDialog;
-import me.chonchol.andropos.model.Stock;
+import me.chonchol.andropos.model.report.ProfitReport;
 import me.chonchol.andropos.report.ReportGenerator;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
@@ -34,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class StockReportActivity extends AppCompatActivity {
+public class ProfitReportActivity extends AppCompatActivity {
 
     private RadioGroup radGrpReportType;
     private RadioButton radioStockAlert, radioProductWise, radioWeekly, radioMonthly, radioCustom;
@@ -61,28 +62,28 @@ public class StockReportActivity extends AppCompatActivity {
 
         initializeView();
 
-        btnGenerateReport = (FloatingActionButton) findViewById(R.id.btnGenerateReport);
+        btnGenerateReport = (FloatingActionButton) findViewById(R.id.fab);
         btnGenerateReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewDialog = new ViewDialog(StockReportActivity.this);
+                viewDialog = new ViewDialog(ProfitReportActivity.this);
                 viewDialog.show();
 
                 switch (reportType) {
                     case 1:
-                        generateStockAlertReport();
+                        //generateStockAlertReport();
                         break;
                     case 2:
-                        generateProductWiseReport();
+                        //generateProductWiseReport();
                         break;
                     case 3:
-                        generateStockReportByDate(fromDate, toDate);
+                        generateProfitReportByDate(fromDate, toDate);
                         break;
                     case 4:
-                        generateStockReportByDate(fromDate, toDate);
+                        generateProfitReportByDate(fromDate, toDate);
                         break;
                     case 5:
-                        generateStockReportByDate(fromDate, toDate);
+                        generateProfitReportByDate(fromDate, toDate);
                         break;
                     default:
                         break;
@@ -91,58 +92,31 @@ public class StockReportActivity extends AppCompatActivity {
         });
     }
 
-    private void generateProductWiseReport() {
-
-    }
-
-    private void generateStockAlertReport() {
-        List<Stock> stockList = new ArrayList<>();
-
+    private void generateProfitReportByDate(String fromDate, String toDate) {
+        List<ProfitReport> profitReportList = new ArrayList<>();
         apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
-        apiService.getStockAlertStockList(5).enqueue(new Callback<List<Stock>>() {
+        apiService.getProfitReportByDate(fromDate, toDate).enqueue(new Callback<List<ProfitReport>>() {
             @Override
-            public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
+            public void onResponse(Call<List<ProfitReport>> call, Response<List<ProfitReport>> response) {
                 if (response.isSuccessful()){
-                    for (Stock stock: response.body()){
-                        stockList.add(stock);
+                    for (ProfitReport report: response.body()){
+                        profitReportList.add(report);
                     }
-                    reportGenerator.generateStockReport(getApplicationContext(), stockList);
+
                     viewDialog.hide();
+                    reportGenerator.generateProfitReport(getApplicationContext(), profitReportList);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Stock>> call, Throwable t) {
+            public void onFailure(Call<List<ProfitReport>> call, Throwable t) {
                 viewDialog.hide();
-                Toasty.error(getApplicationContext(), "Stock report generation failed.!", Toast.LENGTH_SHORT, true).show();
+                Toasty.error(getApplicationContext(), "Profit report generation failed.!", Toast.LENGTH_SHORT, true).show();
+
             }
         });
     }
 
-    private void generateStockReportByDate(String fromDate, String toDate) {
-
-        List<Stock> stockList = new ArrayList<>();
-
-        apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
-        apiService.getStockReportByDate(fromDate, toDate).enqueue(new Callback<List<Stock>>() {
-            @Override
-            public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
-                if (response.isSuccessful()) {
-                    for (Stock stock : response.body()) {
-                        stockList.add(stock);
-                    }
-                    reportGenerator.generateStockReport(getApplicationContext(), stockList);
-                    viewDialog.hide();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Stock>> call, Throwable t) {
-                viewDialog.hide();
-                Toasty.error(getApplicationContext(), "Stock report generation failed.!", Toast.LENGTH_SHORT, true).show();
-            }
-        });
-    }
 
     private void initializeView() {
         radGrpReportType = findViewById(R.id.radGrpReportType);
@@ -155,7 +129,7 @@ public class StockReportActivity extends AppCompatActivity {
         inputFromDate = findViewById(R.id.inputFromDate);
         inputToDate = findViewById(R.id.inputToDate);
 
-        radioStockAlert.setVisibility(View.VISIBLE);
+        radioStockAlert.setVisibility(View.GONE);
 
         DatePickerDialog.OnDateSetListener fromDatePicker = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -182,10 +156,7 @@ public class StockReportActivity extends AppCompatActivity {
         radGrpReportType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i == R.id.radioStockAlert) {
-                    layoutDateRange.setVisibility(View.GONE);
-                    reportType = ReportType.STOCK_ALERT_REPORT.getValue();
-                } else if (i == R.id.radioProductWise) {
+                if (i == R.id.radioProductWise) {
                     layoutDateRange.setVisibility(View.GONE);
                     reportType = ReportType.PRODUCT_WISE_REPORT.getValue();
                 } else if (i == R.id.radioWeekly) {
@@ -205,7 +176,7 @@ public class StockReportActivity extends AppCompatActivity {
                     inputFromDate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new DatePickerDialog(StockReportActivity.this, fromDatePicker, calendar.get(Calendar.YEAR),
+                            new DatePickerDialog(ProfitReportActivity.this, fromDatePicker, calendar.get(Calendar.YEAR),
                                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
                         }
                     });
@@ -213,7 +184,7 @@ public class StockReportActivity extends AppCompatActivity {
                     inputToDate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new DatePickerDialog(StockReportActivity.this, toDatePicker, calendar.get(Calendar.YEAR),
+                            new DatePickerDialog(ProfitReportActivity.this, toDatePicker, calendar.get(Calendar.YEAR),
                                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
                         }
                     });
@@ -222,7 +193,6 @@ public class StockReportActivity extends AppCompatActivity {
         });
     }
 
-
     public Date addDays(Date date, int days) {
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTime(date);
@@ -230,6 +200,5 @@ public class StockReportActivity extends AppCompatActivity {
 
         return calendar.getTime();
     }
-
 
 }

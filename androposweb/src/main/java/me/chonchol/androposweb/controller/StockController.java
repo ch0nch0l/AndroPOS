@@ -53,7 +53,10 @@ public class StockController extends BaseController{
         return stockRepository.getStockAlertStockList(quantity);
     }
 
-
+    @GetMapping("api/report/stock/{from_date}/{to_date}")
+    public List<Stock> getStockReportByDate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
+        return stockRepository.getStockReportByDate(fromDate, toDate);
+    }
 
     @Transactional
     @ResponseBody

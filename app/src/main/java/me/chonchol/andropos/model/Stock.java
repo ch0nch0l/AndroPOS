@@ -1,5 +1,7 @@
 package me.chonchol.andropos.model;
 
+import java.util.Date;
+
 public class Stock {
 
     private Integer stockId;
@@ -7,6 +9,8 @@ public class Stock {
     private Product product;
 
     private Integer quantity;
+
+    private Date date;
 
     public Integer getStockId() {
         return stockId;
@@ -30,5 +34,13 @@ public class Stock {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
