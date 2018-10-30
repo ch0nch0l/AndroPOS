@@ -18,6 +18,7 @@ import java.util.List;
 
 import me.chonchol.andropos.R;
 import me.chonchol.andropos.adapter.SaleRecordAdapter;
+import me.chonchol.andropos.helper.ViewDialog;
 import me.chonchol.andropos.model.QuotationList;
 import me.chonchol.andropos.rest.ApiClient;
 import me.chonchol.andropos.rest.ApiService;
@@ -28,11 +29,12 @@ import retrofit2.Response;
 
 public class SaleRecordActivity extends AppCompatActivity {
 
-    private ProgressDialog progressDialog;
+    //private ProgressDialog progressDialog;
     private RecyclerView saleRecordListView;
     private List<QuotationList> quotationLists = new ArrayList<>();
     private SaleRecordAdapter adapter;
     private ApiService apiService;
+    private ViewDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +59,13 @@ public class SaleRecordActivity extends AppCompatActivity {
 
 
     private void initializeView(List<QuotationList> quotationLists){
-        progressDialog = new ProgressDialog(SaleRecordActivity.this);
+        //progressDialog = new ProgressDialog(SaleRecordActivity.this);
+//        progressDialog.setMessage("Please wait...");
+//        progressDialog.show();
         saleRecordListView = findViewById(R.id.saleRecordListView);
-        progressDialog.setMessage("Please wait...");
-        progressDialog.show();
+        dialog = new ViewDialog(SaleRecordActivity.this);
+        dialog.show();
+
 
         adapter = new SaleRecordAdapter(getApplicationContext(), quotationLists);
 
@@ -83,14 +88,14 @@ public class SaleRecordActivity extends AppCompatActivity {
                         quotationLists.add(quotationList);
                         adapter.notifyDataSetChanged();
                     }
-                    progressDialog.dismiss();
+                    dialog.hide();
                 }
 
             }
 
             @Override
             public void onFailure(Call<List<QuotationList>> call, Throwable t) {
-                progressDialog.dismiss();
+                dialog.hide();
             }
         });
         return quotationLists;

@@ -24,7 +24,8 @@ public class Stock {
     @Column(name = "quantity")
     private Integer quantity;
 
-    private Date date;
+    @Column(name = "date")
+    private String date;
 
     public Integer getStockId() {
         return stockId;
@@ -50,11 +51,11 @@ public class Stock {
         this.quantity = quantity;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

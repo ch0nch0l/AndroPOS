@@ -42,18 +42,9 @@
         <activity android:name=".layout.AddUserActivity" />
         <activity android:name=".layout.UserListActivity" />
         <activity android:name=".layout.ClientLoginActivity" />
-        <activity
-            android:name=".layout.StockReportActivity"
-            android:label="@string/title_activity_filter_report"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".layout.SaleReportActivity"
-            android:label="@string/title_activity_sale_report"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".layout.ProfitReportActivity"
-            android:label="@string/title_activity_profit_report"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".layout.StockReportActivity"/>
+        <activity android:name=".layout.SaleReportActivity"/>
+        <activity android:name=".layout.ProfitReportActivity"/>
     </application>
 
 </manifest>

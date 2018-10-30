@@ -40,8 +40,8 @@ public class SaleController {
     }
 
     @GetMapping("api/report/sale/{from_date}/{to_date}")
-    public List<SaleReport> getSaleReportBydate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
-        return saleRepository.getSaleReportBydate(fromDate, toDate);
+    public List<SaleReport> getSaleReportByDate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
+        return saleRepository.getSaleReportByDate(fromDate, toDate);
     }
 
     @GetMapping("api/report/profit/{from_date}/{to_date}")

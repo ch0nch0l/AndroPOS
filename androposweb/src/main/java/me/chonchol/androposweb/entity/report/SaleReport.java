@@ -15,6 +15,15 @@ public class SaleReport {
     private Integer quantity;
     private Double totalAmount;
 
+    public SaleReport(Date date, String customerName, String phoneNo, String productName, Integer quantity, Double totalAmount) {
+        this.date = date;
+        this.customerName = customerName;
+        this.phoneNo = phoneNo;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.totalAmount = totalAmount;
+    }
+
     public Date getDate() {
         return date;
     }

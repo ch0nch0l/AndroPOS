@@ -1,7 +1,6 @@
 package me.chonchol.andropos.layout;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -15,26 +14,23 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.weiwangcn.betterspinner.library.BetterSpinner;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.helper.ViewDialog;
 import me.chonchol.andropos.model.Category;
 import me.chonchol.andropos.model.Product;
 import me.chonchol.andropos.model.Stock;
@@ -46,11 +42,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.Manifest.permission_group.CAMERA;
-
 public class AddProductActivity extends AppCompatActivity {
 
-    private EditText productName, productPrice, productQuantity;
+    private EditText productName, productCostPrice, productSellPrice, productQuantity;
     private Button btnScanBarCode;
     private ImageView imgProductBarCode;
     private CheckBox chkScanBarcode;
@@ -69,7 +63,8 @@ public class AddProductActivity extends AppCompatActivity {
     private Product product;
     private String scannedCode = null;
     private String prodName;
-    private Double prodPrice;
+    private Double costPrice, prodPrice;
+    private ViewDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +101,8 @@ public class AddProductActivity extends AppCompatActivity {
                     //in this case you can display whatever data is available on the qrcode
                     //to a toast
                     scannedCode = result.getContents();
-                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+                    //product.setCode(result.getContents());
+                    Toasty.success(getApplicationContext(), "Barcode Added as Product Code", Toast.LENGTH_SHORT, true).show();
                 }
             }
         } else {
@@ -117,7 +113,8 @@ public class AddProductActivity extends AppCompatActivity {
 
     private void initializeView() {
         productName = findViewById(R.id.txtProductName);
-        productPrice = findViewById(R.id.txtProductPrice);
+        productCostPrice = findViewById(R.id.txtProductCost);
+        productSellPrice = findViewById(R.id.txtProductPrice);
         productQuantity = findViewById(R.id.txtProductQuantity);
         btnScanBarCode = findViewById(R.id.btnScanBarCode);
         btnAddProduct = findViewById(R.id.btnAddProduct);
@@ -127,7 +124,10 @@ public class AddProductActivity extends AppCompatActivity {
         dropdownCatList = findViewById(R.id.dropdownCatList);
         dropdownSubcatList = findViewById(R.id.dropdownSubcatList);
 
+        dialog = new ViewDialog(AddProductActivity.this);
         product = new Product();
+
+        dialog.show();
         getCatNameList();
 
         catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, catNameList);
@@ -138,6 +138,7 @@ public class AddProductActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object object = categoryList.get(position);
                 Category category = (Category) object;
+                dialog.show();
                 getSubcategoryListByCatId(category.getCatId());
                 subcatAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_dropdown_item_1line, subcatNameList);
                 dropdownSubcatList.setEnabled(true);
@@ -180,13 +181,15 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 prodName = productName.getText().toString();
-                prodPrice = Double.valueOf(productPrice.getText().toString());
+                costPrice = Double.valueOf(productCostPrice.getText().toString());
+                prodPrice = Double.valueOf(productSellPrice.getText().toString());
 
                 if (prodName.isEmpty() || prodPrice == null){
                     Toasty.warning(getApplicationContext(), "Field can't be empty!", Toast.LENGTH_LONG, true).show();
 
                 } else {
                     product.setProductName(prodName);
+                    product.setCost(costPrice);
                     product.setPrice(prodPrice);
                     product.setActive(true);
                     if (scannedCode != null) {
@@ -195,6 +198,7 @@ public class AddProductActivity extends AppCompatActivity {
                         product.setCode(productName.getText().toString() + dropdownSubcatList.getText().toString());
                     }
 
+                    dialog.show();
                     saveProduct(product);
                 }
 
@@ -217,23 +221,26 @@ public class AddProductActivity extends AppCompatActivity {
         apiService.saveProduct(product).enqueue(new Callback<Product>() {
             @Override
             public void onResponse(Call<Product> call, Response<Product> response) {
-                response.body();
-                Toast.makeText(getApplicationContext(), "Product added", Toast.LENGTH_LONG).show();
+                //response.body();
+                //Toast.makeText(getApplicationContext(), "Product added", Toast.LENGTH_LONG).show();
 
                 if (response.isSuccessful()) {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Product product = response.body();
                     Stock stock = new Stock();
                     stock.setProduct(product);
                     stock.setQuantity(Integer.valueOf(productQuantity.getText().toString()));
+                    stock.setDate(format.format(Calendar.getInstance().getTime()));
 
                     saveStock(stock);
-                    Toasty.success(getApplicationContext(), "Product added successfully!", Toast.LENGTH_LONG, true).show();
+                    //Toasty.success(getApplicationContext(), "Product added successfully!", Toast.LENGTH_LONG, true).show();
 
                 }
             }
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
+                dialog.hide();
                 Toasty.error(getApplicationContext(), "Product add failed!!!", Toast.LENGTH_LONG, true).show();
             }
         });
@@ -245,14 +252,15 @@ public class AddProductActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Stock> call, Response<Stock> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Stock added", Toast.LENGTH_LONG).show();
+                    dialog.hide();
+                    Toasty.success(getApplicationContext(), "Product added successfully.!", Toast.LENGTH_SHORT, true).show();
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Stock> call, Throwable t) {
-
+                dialog.hide();
             }
         });
     }
@@ -263,16 +271,22 @@ public class AddProductActivity extends AppCompatActivity {
         getSubcategoryListByCatId.enqueue(new Callback<List<Subcategory>>() {
             @Override
             public void onResponse(Call<List<Subcategory>> call, Response<List<Subcategory>> response) {
-                subcatNameList.clear();
-                for (Subcategory subcategory : response.body()) {
-                    subcatNameList.add(subcategory.getSubcatName());
-                    subcategoryList.add(subcategory);
+                if (response.isSuccessful()){
+                    subcatNameList.clear();
+                    subcategoryList.clear();
+                    for (Subcategory subcategory : response.body()) {
+                        subcatNameList.add(subcategory.getSubcatName());
+                        subcategoryList.add(subcategory);
+                    }
+
+                    dialog.hide();
                 }
+
             }
 
             @Override
             public void onFailure(Call<List<Subcategory>> call, Throwable t) {
-
+                dialog.hide();
             }
         });
     }
@@ -283,15 +297,19 @@ public class AddProductActivity extends AppCompatActivity {
         getAllCategories.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                for (Category category : response.body()) {
-                    catNameList.add(category.getCatName());
-                    categoryList.add(category);
+                if (response.isSuccessful()){
+                    for (Category category : response.body()) {
+                        catNameList.add(category.getCatName());
+                        categoryList.add(category);
+                    }
+                    dialog.hide();
                 }
+
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-
+                dialog.hide();
             }
         });
         return catNameList;

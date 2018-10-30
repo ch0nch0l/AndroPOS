@@ -446,8 +446,8 @@ public class ReportGenerator {
             SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss a");
             SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy_HHmm");
             FileOutputStream outputStream = new FileOutputStream(
-                    new File(Environment.getExternalStorageDirectory() + "/AndroPOS/Reports/Sale"
-                            , "SALE_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf"
+                    new File(Environment.getExternalStorageDirectory() + "/AndroPOS/Reports/Profit"
+                            , "PROFIT_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf"
                     ));
 
             PdfWriter writer = PdfWriter.getInstance(document, outputStream);

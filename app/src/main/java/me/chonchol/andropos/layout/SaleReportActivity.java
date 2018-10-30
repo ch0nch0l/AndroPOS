@@ -48,7 +48,8 @@ public class SaleReportActivity extends AppCompatActivity {
     private String fromDate, toDate;
     private Calendar calendar = Calendar.getInstance();
     private Date currentTime = Calendar.getInstance().getTime();
-    private DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+    private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private DateFormat inputFormat = new SimpleDateFormat("dd-MMM-yyyy");
 
     private ReportGenerator reportGenerator = new ReportGenerator();
     private ApiService apiService;
@@ -99,6 +100,7 @@ public class SaleReportActivity extends AppCompatActivity {
         apiService.getSaleReportBydate(fromDate, toDate).enqueue(new Callback<List<SaleReport>>() {
             @Override
             public void onResponse(Call<List<SaleReport>> call, Response<List<SaleReport>> response) {
+
                 if (response.isSuccessful()){
                     for (SaleReport report: response.body()){
                         saleReportList.add(report);
@@ -136,7 +138,8 @@ public class SaleReportActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                inputFromDate.setText(format.format(calendar.getTime()));
+                inputFromDate.setText(inputFormat.format(calendar.getTime()));
+                fromDate = format.format(calendar.getTime());
 
             }
         };
@@ -147,8 +150,8 @@ public class SaleReportActivity extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                inputToDate.setText(format.format(calendar.getTime()));
-
+                inputToDate.setText(inputFormat.format(calendar.getTime()));
+                toDate = format.format(calendar.getTime());
             }
         };
 
@@ -161,12 +164,12 @@ public class SaleReportActivity extends AppCompatActivity {
                 } else if (i == R.id.radioWeekly) {
                     layoutDateRange.setVisibility(View.GONE);
                     reportType = ReportType.WEEKLY_REPORT.getValue();
-                    fromDate = format.format(addDays(currentTime, 7));
+                    fromDate = format.format(addDays(currentTime, -7));
                     toDate = format.format(currentTime);
                 } else if (i == R.id.radioMonthly) {
                     layoutDateRange.setVisibility(View.GONE);
                     reportType = ReportType.MONTHLY_REPORT.getValue();
-                    fromDate = format.format(addDays(currentTime, Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)));
+                    fromDate = format.format(addDays(currentTime, -Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)));
                     toDate = format.format(currentTime);
                 } else if (i == R.id.radioCustom) {
                     layoutDateRange.setVisibility(View.VISIBLE);

@@ -48,7 +48,7 @@ public class ProfitReportActivity extends AppCompatActivity {
     private String fromDate, toDate;
     private Calendar calendar = Calendar.getInstance();
     private Date currentTime = Calendar.getInstance().getTime();
-    private DateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
+    private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private ReportGenerator reportGenerator = new ReportGenerator();
     private ApiService apiService;

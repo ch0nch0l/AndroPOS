@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import me.chonchol.andropos.R;
+import me.chonchol.andropos.layout.ProfitReportActivity;
+import me.chonchol.andropos.layout.SaleReportActivity;
 import me.chonchol.andropos.layout.StockReportActivity;
 
 /**
@@ -94,7 +96,7 @@ public class ReportFragment extends Fragment {
         btnSaleReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), StockReportActivity.class);
+                Intent intent = new Intent(getContext(), SaleReportActivity.class);
                 startActivity(intent);
             }
         });
@@ -102,7 +104,7 @@ public class ReportFragment extends Fragment {
         btnProfitReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), StockReportActivity.class);
+                Intent intent = new Intent(getContext(), ProfitReportActivity.class);
                 startActivity(intent);
             }
         });

@@ -41,11 +41,18 @@
             android:enabled="false"/>
 
         <EditText
+            android:id="@+id/txtProductCost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Enter Product Cost Price"/>
+
+        <EditText
             android:id="@+id/txtProductPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:hint="Enter Product Price"/>
+            android:hint="Enter Product Sell Price"/>
 
         <EditText
             android:id="@+id/txtProductQuantity"
