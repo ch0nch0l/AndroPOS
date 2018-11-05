@@ -1,5 +1,6 @@
 package me.chonchol.andropos.rest;
 
+import java.util.Date;
 import java.util.List;
 
 import me.chonchol.andropos.model.Category;
@@ -107,7 +108,7 @@ public interface ApiService {
     Call<List<Stock>> getStockReportByDate(@Path("from_date") String fromDate, @Path("to_date") String toDate);
 
     @GET("api/report/sale/{from_date}/{to_date}")
-    Call<List<SaleReport>> getSaleReportBydate(@Path("from_date")String fromDate, @Path("to_date") String toDate);
+    Call<List<SaleReport>> getSaleReportByDate(@Path("from_date")Date fromDate, @Path("to_date") Date toDate);
 
     @GET("api/report/profit/{from_date}/{to_date}")
     Call<List<ProfitReport>> getProfitReportByDate(@Path("from_date")String fromDate, @Path("to_date") String toDate);

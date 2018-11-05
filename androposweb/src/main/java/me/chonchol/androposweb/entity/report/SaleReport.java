@@ -1,6 +1,10 @@
 package me.chonchol.androposweb.entity.report;
 
-import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+import java.sql.Date;
+
 
 /**
  * Created by mehedi.chonchol on 30-Oct-18.
@@ -8,14 +12,14 @@ import java.util.Date;
 
 public class SaleReport {
 
-    private Date date;
+    private String date;
     private String customerName;
     private String phoneNo;
     private String productName;
-    private Integer quantity;
-    private Double totalAmount;
+    private String quantity;
+    private String totalAmount;
 
-    public SaleReport(Date date, String customerName, String phoneNo, String productName, Integer quantity, Double totalAmount) {
+    public SaleReport(String date, String customerName, String phoneNo, String productName, String quantity, String totalAmount) {
         this.date = date;
         this.customerName = customerName;
         this.phoneNo = phoneNo;
@@ -24,11 +28,11 @@ public class SaleReport {
         this.totalAmount = totalAmount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -56,19 +60,19 @@ public class SaleReport {
         this.productName = productName;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    public Double getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
     }
 }

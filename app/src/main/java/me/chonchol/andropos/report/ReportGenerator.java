@@ -427,7 +427,7 @@ public class ReportGenerator {
 
                 document.add(table);
 
-                Toasty.success(context, "Stock Report STOCK_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf generated at DOWNLOADS folder", Toast.LENGTH_SHORT, true).show();
+                Toasty.success(context, "Sale Report SALE_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf generated at DOWNLOADS folder", Toast.LENGTH_SHORT, true).show();
             } catch (DocumentException de) {
                 Log.e("PDFCreator", "DocumentException:" + de);
             } catch (IOException e) {
@@ -613,7 +613,7 @@ public class ReportGenerator {
 
                 document.add(table);
 
-                Toasty.success(context, "Stock Report STOCK_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf generated at DOWNLOADS folder", Toast.LENGTH_SHORT, true).show();
+                Toasty.success(context, "Profit Report PROFIT_" + dateFormat.format(Calendar.getInstance().getTime()) + ".pdf generated at DOWNLOADS folder", Toast.LENGTH_SHORT, true).show();
             } catch (DocumentException de) {
                 Log.e("PDFCreator", "DocumentException:" + de);
             } catch (IOException e) {

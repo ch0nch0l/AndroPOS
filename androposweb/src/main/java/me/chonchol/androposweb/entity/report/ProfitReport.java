@@ -1,11 +1,15 @@
 package me.chonchol.androposweb.entity.report;
 
+import org.springframework.stereotype.Component;
+
+import javax.persistence.Entity;
 import java.util.Date;
 
 /**
  * Created by mehedi.chonchol on 30-Oct-18.
  */
 
+@Component
 public class ProfitReport {
 
     private Date date;

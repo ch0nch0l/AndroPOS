@@ -6,6 +6,20 @@ import javax.persistence.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
+@SqlResultSetMapping(name = "SaleReportResult",
+        classes = {
+                @ConstructorResult(
+                        targetClass = me.chonchol.androposweb.entity.report.SaleReport.class,
+                        columns = {
+                                @ColumnResult(name = "date"),
+                                @ColumnResult(name = "customerName"),
+                                @ColumnResult(name = "phoneNo"),
+                                @ColumnResult(name = "productName"),
+                                @ColumnResult(name = "quantity"),
+                                @ColumnResult(name = "totalAmount"),
+                        })
+        }
+)
 @Table(name = "SALE")
 public class Sale {
 

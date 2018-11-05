@@ -8,18 +8,18 @@ import java.util.Date;
 
 public class SaleReport {
 
-    private Date date;
+    private String date;
     private String customerName;
     private String phoneNo;
     private String productName;
-    private Integer quantity;
-    private Double totalAmount;
+    private String quantity;
+    private String totalAmount;
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -47,19 +47,19 @@ public class SaleReport {
         this.productName = productName;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    public Double getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
     }
 }

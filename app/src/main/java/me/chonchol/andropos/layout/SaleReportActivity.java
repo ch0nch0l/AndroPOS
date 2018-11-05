@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,7 +50,7 @@ public class SaleReportActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
     private Date currentTime = Calendar.getInstance().getTime();
     private DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private DateFormat inputFormat = new SimpleDateFormat("dd-MMM-yyyy");
+    private DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     private ReportGenerator reportGenerator = new ReportGenerator();
     private ApiService apiService;
@@ -78,13 +79,25 @@ public class SaleReportActivity extends AppCompatActivity {
                         //generateProductWiseReport();
                         break;
                     case 3:
-                        generateSaleReportByDate(fromDate, toDate);
+                        try {
+                            generateSaleReportByDate(fromDate, toDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case 4:
-                        generateSaleReportByDate(fromDate, toDate);
+                        try {
+                            generateSaleReportByDate(fromDate, toDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case 5:
-                        generateSaleReportByDate(fromDate, toDate);
+                        try {
+                            generateSaleReportByDate(fromDate, toDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     default:
                         break;
@@ -93,14 +106,19 @@ public class SaleReportActivity extends AppCompatActivity {
         });
     }
 
-    private void generateSaleReportByDate(String fromDate, String toDate) {
+    private void generateSaleReportByDate(String fromDate, String toDate) throws ParseException {
         List<SaleReport> saleReportList = new ArrayList<>();
 
+        //TODO:
+        android.text.format.DateFormat format = new android.text.format.DateFormat();
+
         apiService = ApiClient.getClient(ClientSharedPreference.getClientUrl(getApplicationContext())).create(ApiService.class);
-        apiService.getSaleReportBydate(fromDate, toDate).enqueue(new Callback<List<SaleReport>>() {
+        apiService.getSaleReportByDate(
+                (Date) format.format("dd-MM-yyyy", new Date(fromDate)),
+                (Date) format.format("dd-MM-yyyy", new Date(toDate))).enqueue(new Callback<List<SaleReport>>() {
             @Override
             public void onResponse(Call<List<SaleReport>> call, Response<List<SaleReport>> response) {
-
+                response.body();
                 if (response.isSuccessful()){
                     for (SaleReport report: response.body()){
                         saleReportList.add(report);
@@ -139,7 +157,7 @@ public class SaleReportActivity extends AppCompatActivity {
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 inputFromDate.setText(inputFormat.format(calendar.getTime()));
-                fromDate = format.format(calendar.getTime());
+                fromDate = inputFormat.format(calendar.getTime());
 
             }
         };
@@ -151,7 +169,7 @@ public class SaleReportActivity extends AppCompatActivity {
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 inputToDate.setText(inputFormat.format(calendar.getTime()));
-                toDate = format.format(calendar.getTime());
+                toDate = inputFormat.format(calendar.getTime());
             }
         };
 
@@ -164,13 +182,13 @@ public class SaleReportActivity extends AppCompatActivity {
                 } else if (i == R.id.radioWeekly) {
                     layoutDateRange.setVisibility(View.GONE);
                     reportType = ReportType.WEEKLY_REPORT.getValue();
-                    fromDate = format.format(addDays(currentTime, -7));
-                    toDate = format.format(currentTime);
+                    fromDate = inputFormat.format(addDays(currentTime, -7));
+                    toDate = inputFormat.format(currentTime);
                 } else if (i == R.id.radioMonthly) {
                     layoutDateRange.setVisibility(View.GONE);
                     reportType = ReportType.MONTHLY_REPORT.getValue();
-                    fromDate = format.format(addDays(currentTime, -Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)));
-                    toDate = format.format(currentTime);
+                    fromDate = inputFormat.format(addDays(currentTime, -Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)));
+                    toDate = inputFormat.format(currentTime);
                 } else if (i == R.id.radioCustom) {
                     layoutDateRange.setVisibility(View.VISIBLE);
                     reportType = ReportType.CUSTOM_REPORT.getValue();

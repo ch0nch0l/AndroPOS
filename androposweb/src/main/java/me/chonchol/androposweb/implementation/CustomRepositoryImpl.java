@@ -39,7 +39,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 
     @Override
     public List<SaleReport> getSaleReportByDate(String fromDate, String toDate) {
-        Query query = entityManager.createNativeQuery(saleReportQuery, SaleReport.class);
+        Query query = entityManager.createNativeQuery(saleReportQuery);
         query.setParameter("from_date", fromDate);
         query.setParameter("to_date", toDate);
         return query.getResultList();
@@ -47,7 +47,7 @@ public class CustomRepositoryImpl implements CustomRepository {
 
     @Override
     public List<ProfitReport> getProfitReportByDate(String fromDate, String toDate) {
-        Query query = entityManager.createNativeQuery(profitReportQuery, ProfitReport.class);
+        Query query = entityManager.createNativeQuery(profitReportQuery);
         query.setParameter("from_date", fromDate);
         query.setParameter("to_date", toDate);
         return query.getResultList();

@@ -39,15 +39,15 @@ public class SaleController {
         return saleRepository.save(newSale);
     }
 
-    @GetMapping("api/report/sale/{from_date}/{to_date}")
-    public List<SaleReport> getSaleReportByDate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
-        return saleRepository.getSaleReportByDate(fromDate, toDate);
-    }
+//    @GetMapping("api/report/sale/{from_date}/{to_date}")
+//    public List<SaleReport> getSaleReportByDate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
+//        return saleRepository.getSaleReportByDate(fromDate, toDate);
+//    }
 
-    @GetMapping("api/report/profit/{from_date}/{to_date}")
-    public List<ProfitReport> getProfitReportByDate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
-        return saleRepository.getProfitReportByDate(fromDate, toDate);
-    }
+//    @GetMapping("api/report/profit/{from_date}/{to_date}")
+//    public List<ProfitReport> getProfitReportByDate(@PathVariable("from_date") String fromDate, @PathVariable("to_date") String toDate){
+//        return saleRepository.getProfitReportByDate(fromDate, toDate);
+//    }
 
     @DeleteMapping("/api/sale/{sale_id}")
     public Boolean delete(@PathVariable("sale_id") Integer id){
